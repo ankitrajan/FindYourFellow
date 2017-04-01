@@ -89,7 +89,7 @@ public class CreateProfileActivity extends AppCompatActivity {
         final String phoneNumber = mNumber.getText().toString();
         final String emergencyNumber = mEmergency.getText().toString();
 
-        if(!(TextUtils.isEmpty(firstName) || TextUtils.isEmpty(lastName) || TextUtils.isEmpty(age) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password) ||  TextUtils.isEmpty(phoneNumber)))
+        if(!(TextUtils.isEmpty(firstName) || TextUtils.isEmpty(lastName) || TextUtils.isEmpty(age) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password) ||  TextUtils.isEmpty(phoneNumber) || TextUtils.isEmpty(emergencyNumber)))
         {
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
@@ -156,10 +156,10 @@ public class CreateProfileActivity extends AppCompatActivity {
 
                                                     Firebase trackRef = newRef.child("Tracking");
 
-                                                    trackRef.setValue("yes");
+                                                    trackRef.setValue("no");
 
                                                     // after email is sent just logout the user and finish this activity
-                                                    FirebaseAuth.getInstance().signOut();
+                                                    mAuth.signOut();
 
                                                     startActivity(new Intent(CreateProfileActivity.this, MainActivity.class));
                                                     finish();
