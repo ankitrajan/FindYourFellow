@@ -34,10 +34,10 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="118dp"
+        android:layout_width="148dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="  Distance   Status"
+        android:text="     Distance       Status"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textColor="@android:color/white"
         app:layout_anchor="@+id/imageView4"

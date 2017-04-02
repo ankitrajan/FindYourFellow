@@ -45,12 +45,15 @@ public class TrackFriendsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_track_friends);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setIcon(R.drawable.ic_track);
+        getSupportActionBar().setTitle("");
         //getSupportActionBar().setTitle("");
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setIcon(R.drawable.logomain2);
+        //ActionBar actionBar = getSupportActionBar();
+        //actionBar.setDisplayShowHomeEnabled(true);
+        //actionBar.setIcon(R.drawable.logomain2);
+        //((AppCompatActivity) getActivity()).getSupportActionBar().setTitle();
 
 
 

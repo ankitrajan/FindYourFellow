@@ -1,14 +1,27 @@
 package com.example.ankit.findyourfellow;
 
 import android.*;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -236,6 +249,121 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        InternetAvailability();
+    }
+
+    private void InternetAvailability() {
+
+        if (!isNetworkAvailable())
+        {
+            vibratePhone();
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setMessage("No Internet Connection, do you want to enable it?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int id)
+                        {
+                            goToMobileDataSettings();
+
+                        }
+
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Toast.makeText(MainActivity.this, "Internet Connection Not Avalailable", Toast.LENGTH_LONG).show();
+                            dialog.cancel();
+                        }
+                    });
+
+            builder.create().show();
+        }
+
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    public void goToMobileDataSettings()
+    {
+        Intent mobileIntent = new Intent();
+        mobileIntent.setComponent(new ComponentName("com.android.settings", "com.android.settings.Settings$DataUsageSummaryActivity")); //for data enabled
+        startActivity(mobileIntent);
+    }
+
+/////////////////////////////////////////////////////////////////////////////
+
+    public void vibratePhone(){
+
+        addNotification();
+        long[] pattern = {50,100,1000};
+        Vibrator vibe=(Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibe.vibrate(pattern,0);
+        countDown();
+
+
+        //when phone is sleeping
+        BroadcastReceiver vibrateReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if(intent.getAction().equals(Intent.ACTION_SCREEN_OFF) && !isNetworkAvailable()) {
+
+                    long[] pattern = {50,100,1000};
+                    Vibrator vibe=(Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                    vibe.vibrate(pattern,0);
+                    countDown();
+
+                }
+            }
+        };
+
+        IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+        registerReceiver(vibrateReceiver, filter);
+        //end
+
+    }
+
+    public void countDown(){
+
+        new CountDownTimer(5000, 1000) { //5 sec countdown
+
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            public void onFinish() {
+                Vibrator v=(Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                v.cancel();
+            }
+        }.start();
+
+    }
+
+    ////////////////////////////////////////////////////////////////
+
+    private void addNotification() {
+        NotificationCompat.Builder builder =
+                (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.logomain2) //logo
+                        .setContentTitle("Alert! No Internet") //large text
+                        .setContentText("You have no internet, connect to use app");// small text
+
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(contentIntent);
+
+        // Add as notification
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.notify(0, builder.build());
+    }
 
 
     /*

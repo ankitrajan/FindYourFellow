@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FindYourFellow</string>
+    <string name="app_name">The Bar app</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_create_profile">CreateProfileActivity</string>
     <string name="title_activity_login">LoginActivity</string>

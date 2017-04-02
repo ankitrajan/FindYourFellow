@@ -1,10 +1,13 @@
 package com.example.ankit.findyourfellow;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
+import android.support.v7.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -190,11 +193,32 @@ public class TrackAdapter extends ArrayAdapter{
             holder.COLOR.setBackgroundColor(Color.GREEN);
         else if (intDistance <= 100)
             holder.COLOR.setBackgroundColor(Color.YELLOW);
-        else
+        else {
             holder.COLOR.setBackgroundColor(Color.RED);
+            addNotification();
+        }
 
 
         return row;
 
+    }
+
+    private void addNotification() {
+
+
+        NotificationCompat.Builder builder =
+                (NotificationCompat.Builder) new NotificationCompat.Builder(getContext())
+                        .setSmallIcon(R.drawable.logomain2) //logo
+                        .setContentTitle("FindyourFellow App: ALERT!!!") //large text
+                        .setContentText("Your FRIEND might be in DANGER !!!");// small text
+
+        Intent notificationIntent = new Intent(getContext(), TrackAdapter.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(getContext(), 0, notificationIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(contentIntent);
+
+        // Add as notification
+        NotificationManager manager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.notify(0, builder.build());
     }
 }

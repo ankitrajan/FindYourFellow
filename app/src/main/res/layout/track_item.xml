@@ -11,31 +11,32 @@
         android:id="@+id/track_item_text"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="7dp"
         android:fontFamily="sans-serif-condensed"
         android:text="TextView"
         android:textColor="@android:color/black"
         android:textSize="14sp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="14dp"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/track_item_color" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/track_item_distance"
-        android:layout_width="50dp"
+        android:layout_width="75dip"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
-        android:layout_alignBottom="@+id/track_item_color"
-        android:layout_toEndOf="@+id/track_item_text" />
+        android:layout_alignTop="@+id/track_item_color"
+        android:layout_toStartOf="@+id/track_item_color" />
 
     <ImageView
         android:id="@+id/track_item_color"
         android:layout_width="25dp"
         android:layout_height="17dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/track_item_text"
         android:layout_marginLeft="5dp"
         android:background="@android:color/background_light"
-        app:srcCompat="@android:drawable/screen_background_light" />
+        app:srcCompat="@android:drawable/screen_background_light"
+        android:layout_marginEnd="16dp"
+        android:layout_alignTop="@+id/track_item_text"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
