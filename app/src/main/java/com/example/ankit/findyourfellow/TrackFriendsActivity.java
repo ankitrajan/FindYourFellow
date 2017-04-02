@@ -182,7 +182,7 @@ public class TrackFriendsActivity extends AppCompatActivity {
         friendRef.addChildEventListener(new ChildEventListener() {
 
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            public void onChildAdded(final DataSnapshot dataSnapshot, String s) {
 
                 //String friendName = dataSnapshot.getValue(String.class);
                 final String friendName = dataSnapshot.getValue().toString();
@@ -196,42 +196,48 @@ public class TrackFriendsActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot2)
                     {
 
-                        final String friendLat = dataSnapshot2.child("Latitude").getValue().toString();
+                        if(dataSnapshot2.child("Latitude").exists()) {
+                            final String friendLat = dataSnapshot2.child("Latitude").getValue().toString();
 
-                        final String friendLong = dataSnapshot2.child("Longitude").getValue().toString();
+                            final String friendLong = dataSnapshot2.child("Longitude").getValue().toString();
 
-                        Firebase userRef = new Firebase("https://findyourfellow.firebaseio.com/Users/" + thisUser + "/Information");
+                            Firebase userRef = new Firebase("https://findyourfellow.firebaseio.com/Users/" + thisUser + "/Information");
 
-                        userRef.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot3) {
+                            userRef.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot3) {
 
-                                String userLat = dataSnapshot3.child("Latitude").getValue().toString();
+                                    if(dataSnapshot3.child("Latitude").exists()) {
+                                        String userLat = dataSnapshot3.child("Latitude").getValue().toString();
 
-                                String userLong = dataSnapshot3.child("Longitude").getValue().toString();
+                                        String userLong = dataSnapshot3.child("Longitude").getValue().toString();
 
-                                boolean myTest = friendsAdapter.isAlreadyInList(friendKey);
+                                        boolean myTest = friendsAdapter.isAlreadyInList(friendKey);
 
-                                if (myTest)
-                                {
-                                    friendsAdapter.replaceList(friendKey, friendLat, friendLong, userLat, userLong);
-                                    //Toast.makeText(TrackFriendsActivity.this, friendKey + " in list", Toast.LENGTH_SHORT).show();
+                                        if (myTest) {
+                                            friendsAdapter.replaceList(friendKey, friendLat, friendLong, userLat, userLong);
+                                            //Toast.makeText(TrackFriendsActivity.this, friendKey + " in list", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            friendsAdapter.add(friendName, friendKey, friendLat, friendLong, userLat, userLong);
+                                            //Toast.makeText(TrackFriendsActivity.this, friendKey + " not in list", Toast.LENGTH_SHORT).show();
+                                        }
+
+                                        friendsAdapter.notifyDataSetChanged();
+                                    }
+                                    else
+                                    {
+                                        Toast.makeText(TrackFriendsActivity.this, "Enable Tracking atleast once to track friends ", Toast.LENGTH_LONG).show();
+                                    }
                                 }
-                                else
-                                {
-                                    friendsAdapter.add(friendName, friendKey, friendLat, friendLong, userLat, userLong);
-                                    //Toast.makeText(TrackFriendsActivity.this, friendKey + " not in list", Toast.LENGTH_SHORT).show();
+
+                                @Override
+                                public void onCancelled(FirebaseError firebaseError) {
+
                                 }
-
-                                friendsAdapter.notifyDataSetChanged();
-
-                            }
-
-                            @Override
-                            public void onCancelled(FirebaseError firebaseError) {
-
-                            }
-                        });
+                            });
+                        }
+                        else
+                            Toast.makeText(TrackFriendsActivity.this, friendName + " hasn't yet enabled tracking", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
