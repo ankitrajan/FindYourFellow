@@ -5,6 +5,7 @@
     xmlns:design="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.ankit.findyourfellow.InformationActivity"
     tools:showIn="@layout/activity_information">
@@ -22,7 +23,40 @@
     <TextView
         android:id="@+id/appView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:textColor="@android:color/black" />
+
+    <ImageView
+        android:id="@+id/imageView17"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="-400dp"
+        android:visibility="visible"
+        design:srcCompat="@drawable/delete_button" />
+
+    <TextView
+        android:id="@+id/userid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="-400dp"
+        android:text="TextView"
+        android:textColor="@android:color/black" />
+
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:ems="10"
+        android:fontFamily="sans-serif-condensed"
+        android:inputType="none"
+        android:text="Your User Identification is : "
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />/>
 
 
 </android.support.design.widget.CoordinatorLayout>

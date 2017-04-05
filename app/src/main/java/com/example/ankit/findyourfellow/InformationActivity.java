@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class InformationActivity extends AppCompatActivity {
 
     protected TextView appInfo;
-
+    protected TextView thisUser;
     private FirebaseAuth mAuth;
     private BottomNavigationView bottomNavigationView;
 
@@ -81,14 +81,19 @@ public class InformationActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        String thisUser = mAuth.getCurrentUser().getUid().toString();
 
-        appInfo.setText("Your User Key is " + thisUser +
-                        ". \nShare this with your friends so they could add you. \n \n" +
+        thisUser = (TextView) findViewById(R.id.userid);
+        thisUser.setText (mAuth.getCurrentUser().getUid().toString());
+
+
+
+        appInfo.setText( "\n"                          +
+                        "Share this with your friends so they could add you. \n \n" +
                         "Developers: \n" +
+                        "\n"                       +
                         "Galal, Ahmed \n" +
-                        "Pagkaliwangan, Dexter \n" +
                         "Mondlane, Amilcar \n" +
+                        "Pagkaliwangan, Dexter \n" +
                         "Rajan, Ankit \n" +
                         "Tshimombi, Sylvain \n \n" +
                         "This app lets you keep track of friends. It also allows your " +
