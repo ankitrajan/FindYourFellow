@@ -87,8 +87,8 @@ public class InformationActivity extends AppCompatActivity {
                         ". \nShare this with your friends so they could add you. \n \n" +
                         "Developers: \n" +
                         "Galal, Ahmed \n" +
-                        "Pagkaliwangan, Dexter \n" +
                         "Mondlane, Amilcar \n" +
+                        "Pagkaliwangan, Dexter \n" +
                         "Rajan, Ankit \n" +
                         "Tshimombi, Sylvain \n \n" +
                         "This app lets you keep track of friends. It also allows your " +
