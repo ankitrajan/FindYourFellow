@@ -36,11 +36,11 @@
         <activity
             android:name=".TrackFriendsActivity"
             android:label="@string/title_activity_track_friends"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ManageFriendsActivity"
             android:label="@string/title_activity_manage_friends"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AddFriendActivity"
             android:label="@string/title_activity_add_friend"
@@ -93,7 +93,23 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+            android:parentActivityName=".TrackFriendsActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.ankit.findyourfellow.TrackFriendsActivity" />
+            >
+        </activity>
+        <activity
+            android:name=".EditNameActivity"
+            android:label="@string/title_activity_edit_name"
+            android:parentActivityName=".ManageFriendsActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.ankit.findyourfellow.ManageFriendsActivity" />
+            >
+        </activity>
     </application>
 
 </manifest>

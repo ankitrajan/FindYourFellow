@@ -25,7 +25,11 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
+
 import java.util.ArrayList;
 
 
@@ -45,14 +49,14 @@ public class TrackFriendsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_track_friends);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setIcon(R.drawable.ic_track);
+       // getSupportActionBar().setIcon(R.drawable.ic_track);
         getSupportActionBar().setTitle("");
         //getSupportActionBar().setTitle("");
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //ActionBar actionBar = getSupportActionBar();
-        //actionBar.setDisplayShowHomeEnabled(true);
-        //actionBar.setIcon(R.drawable.logomain2);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.drawable.logofinal480);
         //((AppCompatActivity) getActivity()).getSupportActionBar().setTitle();
 
 
@@ -112,11 +116,11 @@ public class TrackFriendsActivity extends AppCompatActivity {
 
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-
         mAuth = FirebaseAuth.getInstance();
 
         listView = (ListView) findViewById(R.id.myFriends);
         trackingSwitch = (Switch) findViewById(R.id.trackSwitch);
+
 
         //final ArrayAdapter<String> friendsAdapter= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, allFriend);
 
@@ -128,7 +132,8 @@ public class TrackFriendsActivity extends AppCompatActivity {
 
         final Firebase trackingRef = new Firebase("https://findyourfellow.firebaseio.com/Users/" + thisUser + "/Information/Tracking");
 
-        trackingRef.addValueEventListener(new ValueEventListener() {
+        trackingRef.addValueEventListener(new ValueEventListener()
+        {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -199,7 +204,8 @@ public class TrackFriendsActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot2)
                     {
 
-                        if(dataSnapshot2.child("Latitude").exists()) {
+                        //if(dataSnapshot2.child("Latitude").exists())
+                        //{
                             final String friendLat = dataSnapshot2.child("Latitude").getValue().toString();
 
                             final String friendLong = dataSnapshot2.child("Longitude").getValue().toString();
@@ -210,7 +216,8 @@ public class TrackFriendsActivity extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot3) {
 
-                                    if(dataSnapshot3.child("Latitude").exists()) {
+                                    //if(dataSnapshot3.child("Latitude").exists())
+                                    //{
                                         String userLat = dataSnapshot3.child("Latitude").getValue().toString();
 
                                         String userLong = dataSnapshot3.child("Longitude").getValue().toString();
@@ -226,11 +233,11 @@ public class TrackFriendsActivity extends AppCompatActivity {
                                         }
 
                                         friendsAdapter.notifyDataSetChanged();
-                                    }
-                                    else
-                                    {
-                                        Toast.makeText(TrackFriendsActivity.this, "Enable Tracking atleast once to track friends ", Toast.LENGTH_LONG).show();
-                                    }
+                                    //}
+                                    //else
+                                    //{
+                                        //Toast.makeText(TrackFriendsActivity.this, "Enable Tracking atleast once to track friends ", Toast.LENGTH_LONG).show();
+                                    //}
                                 }
 
                                 @Override
@@ -238,9 +245,10 @@ public class TrackFriendsActivity extends AppCompatActivity {
 
                                 }
                             });
-                        }
-                        else
-                            Toast.makeText(TrackFriendsActivity.this, friendName + " hasn't yet enabled tracking", Toast.LENGTH_SHORT).show();
+                        //}
+                        //else {
+                            //Toast.makeText(TrackFriendsActivity.this, friendName + " hasn't yet enabled tracking", Toast.LENGTH_SHORT).show();
+                        //}
                     }
 
                     @Override

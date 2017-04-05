@@ -89,7 +89,9 @@ public class AddFriendActivity extends AppCompatActivity {
 
                                 Firebase addRequestRef = friendListRef.child(user.getUid().toString());
 
-                                addRequestRef.setValue(user.getEmail().toString());
+                                //TODO add name instead of email
+
+                                addRequestRef.setValue(user.getDisplayName().toString());
 
                                 Toast.makeText(AddFriendActivity.this, "Friend request sent", Toast.LENGTH_SHORT).show();
                             }

@@ -7,22 +7,22 @@
         android:id="@+id/normal"
         android:icon="@drawable/ic_track"
         android:title="Normal"
-        android:visible="false" />
+        app:showAsAction="never"/>
     <item
         android:id="@+id/terrain"
         android:icon="@drawable/ic_manage"
         android:title="Terrain"
-        android:visible="false" />
+        app:showAsAction="never"/>
     <item
         android:id="@+id/satellite"
         android:icon="@drawable/ic_info"
         android:title="Satellite"
-        android:visible="false" />
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/hybrid"
         android:icon="@drawable/ic_signout"
         android:title="Hybrid"
-        android:visible="false" />
+        app:showAsAction="never"/>
 
 </menu>

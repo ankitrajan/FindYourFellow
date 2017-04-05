@@ -18,14 +18,13 @@
         android:id="@+id/createFirstName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"
         android:ems="10"
         android:fontFamily="sans-serif-condensed"
         android:hint="First Name"
         android:inputType="textPersonName"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/black"
+        android:layout_alignBottom="@+id/imageView"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:id="@+id/createLastName"
@@ -59,7 +58,8 @@
         android:fontFamily="sans-serif-condensed"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="19dp"
+        android:layout_below="@+id/createAge"
         android:layout_alignStart="@+id/createAge" />
 
     <EditText
@@ -90,12 +90,13 @@
         android:id="@+id/newProfileButton"
         android:layout_width="150dip"
         android:layout_height="30dip"
-        android:background="@drawable/createbutton"
+        android:background="@drawable/button_selector"
         android:fontFamily="sans-serif-condensed"
         android:text="Create Profile"
         android:textColor="@android:color/white"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="11dp" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -109,11 +110,12 @@
         android:id="@+id/createEmergency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Emergency Number"
-        android:inputType="phone"
-        android:layout_below="@+id/createNumber"
         android:layout_alignStart="@+id/createNumber"
-        android:layout_marginTop="12dp" />
+        android:layout_below="@+id/createNumber"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:fontFamily="sans-serif-condensed"
+        android:hint="Emergency Number"
+        android:inputType="phone" />
 
 </RelativeLayout>

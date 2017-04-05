@@ -1,11 +1,13 @@
 package com.example.ankit.findyourfellow;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -81,24 +83,32 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
+    /*
+
     public void setNormalView()
     {
-
+        Toast.makeText(this, "Normal", Toast.LENGTH_SHORT).show();
     }
 
     public void setTerrainView()
     {
-
+        Toast.makeText(this, "Terrain", Toast.LENGTH_SHORT).show();
     }
 
     public void setSatelliteView()
     {
-
+        Toast.makeText(this, "Satellite", Toast.LENGTH_SHORT).show();
     }
 
     public void setHybridView()
     {
+        Toast.makeText(this, "Hybruid", Toast.LENGTH_SHORT).show();
+    }
+    */
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     @Override
@@ -114,16 +124,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         switch(item.getItemId())
         {
             case R.id.normal:
-                setNormalView();
+                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                 return true;
             case R.id.terrain:
-                setTerrainView();
+                mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
                 return true;
             case R.id.satellite:
-                setSatelliteView();
+                mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
                 return true;
             case R.id.hybrid:
-                setHybridView();
+                mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -88,7 +88,7 @@ public class FriendInfoActivity extends AppCompatActivity {
 
     void goToMapActivity()
     {
-        Intent intent= new Intent(this, MapsActivity.class);
+        Intent intent= new Intent(FriendInfoActivity.this, MapsActivity.class);
         intent.putExtra("FRIENDKEY", getIntent().getStringExtra("FRIENDKEY"));
         intent.putExtra("USERKEY", getIntent().getStringExtra("USERKEY"));
         startActivity(intent);

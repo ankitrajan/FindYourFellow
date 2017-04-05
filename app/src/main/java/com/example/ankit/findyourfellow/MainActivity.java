@@ -83,8 +83,9 @@ public class MainActivity extends AppCompatActivity {
             {
                 if(firebaseAuth.getCurrentUser() != null)
                 {
-
-                    goToTrackActivity();
+                    if (firebaseAuth.getCurrentUser().isEmailVerified()) {
+                        goToTrackActivity();
+                    }
                     // startActivity(new Intent(LoginActivity.this, AccountActivity.class));
                 }
             }

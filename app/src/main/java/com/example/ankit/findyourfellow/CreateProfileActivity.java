@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class CreateProfileActivity extends AppCompatActivity {
 
@@ -117,6 +118,22 @@ public class CreateProfileActivity extends AppCompatActivity {
 
                                                     String newUser = mAuth.getCurrentUser().getUid().toString();
 
+                                                    UserProfileChangeRequest.Builder builder = new UserProfileChangeRequest.Builder();
+                                                    builder.setDisplayName(firstName + " " + lastName);
+
+                                                    mAuth.getCurrentUser().updateProfile(builder.build()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+                                                                if (mAuth.getCurrentUser().getDisplayName() != null) {
+                                                                    Toast.makeText(CreateProfileActivity.this, "Display name: " + mAuth.getCurrentUser().getDisplayName().toString(), Toast.LENGTH_SHORT).show();}
+                                                            } else {
+                                                                Toast.makeText(CreateProfileActivity.this, "Display name not saved", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        }
+                                                    });
+
+
                                                     Firebase childRef = mRootRef.child(newUser);
 
                                                     Firebase infoRef = mRootRef.child("Information");
@@ -153,6 +170,14 @@ public class CreateProfileActivity extends AppCompatActivity {
                                                     Firebase emergencyRef = newRef.child("EmergencyNumber1");
 
                                                     emergencyRef.setValue(emergencyNumber);
+
+                                                    Firebase latitudeRef = newRef.child("Latitude");
+
+                                                    latitudeRef.setValue("0");
+
+                                                    Firebase longitudeRef = newRef.child("Longitude");
+
+                                                    longitudeRef.setValue("0");
 
                                                     Firebase trackRef = newRef.child("Tracking");
 

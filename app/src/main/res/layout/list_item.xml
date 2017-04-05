@@ -20,12 +20,12 @@
         android:id="@+id/list_item_accept"
         android:layout_width="100dip"
         android:layout_height="30dip"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/stopbutton"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/accept_selector"
         android:text="ACCEPT"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/white"
+        android:layout_below="@+id/track_item_text"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/list_item_decline"
@@ -34,7 +34,7 @@
         android:layout_alignStart="@+id/list_item_accept"
         android:layout_below="@+id/list_item_accept"
         android:layout_marginTop="17dp"
-        android:background="@drawable/startbutton"
+        android:background="@drawable/delete_selector"
         android:text="DECLINE"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/white" />
 </RelativeLayout>

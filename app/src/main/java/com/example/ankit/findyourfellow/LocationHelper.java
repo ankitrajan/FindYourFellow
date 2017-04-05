@@ -55,7 +55,7 @@ public class LocationHelper extends Service
 
                 //String lastUpdateTime = String.valueOf(location.getTime());
 
-                String lastUpdateTime = (DateFormat.getTimeInstance().format(new Date())).toString();
+                String lastUpdateTime = (DateFormat.getDateTimeInstance().format(new Date())).toString();
 
                 informationRef.child("Latitude").setValue(location.getLatitude());
 

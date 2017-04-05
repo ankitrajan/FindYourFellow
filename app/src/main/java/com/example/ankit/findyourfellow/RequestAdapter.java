@@ -88,7 +88,7 @@ public class RequestAdapter extends ArrayAdapter {
 
                     String userId = mAuth.getCurrentUser().getUid().toString();
 
-                    String userEmail = mAuth.getCurrentUser().getEmail().toString();
+                    String userEmail = mAuth.getCurrentUser().getDisplayName().toString();
 
                     Firebase friendRef = new Firebase("https://findyourfellow.firebaseio.com/Users/" + friendId);
 
