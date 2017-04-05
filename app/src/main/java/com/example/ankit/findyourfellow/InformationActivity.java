@@ -99,7 +99,7 @@ public class InformationActivity extends AppCompatActivity {
                         "any third party. This app is not to be used in unethical " +
                         "ways. This App also doesn't mean you can drink as much " +
                         "as you want. Please follow the recommended amount set " +
-                        "by your government. Apart from that, PARTY HARD. ");
+                        "by your government. Apart from that, PARTY HARD!!! \n\nSpecial Thanks to Dr.Lynch, Dr. Patel, Mr. Fajardo and StackOverflow!");
     }
 
     private void userSignOut()
