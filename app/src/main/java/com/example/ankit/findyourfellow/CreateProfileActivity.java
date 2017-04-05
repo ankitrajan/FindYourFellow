@@ -179,6 +179,10 @@ public class CreateProfileActivity extends AppCompatActivity {
 
                                                     longitudeRef.setValue("0");
 
+                                                    Firebase timeRef = newRef.child("LastUpdate");
+
+                                                    timeRef.setValue("0");
+
                                                     Firebase trackRef = newRef.child("Tracking");
 
                                                     trackRef.setValue("no");
