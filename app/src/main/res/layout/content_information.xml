@@ -9,12 +9,6 @@
     tools:context="com.example.ankit.findyourfellow.InformationActivity"
     tools:showIn="@layout/activity_information">
 
-
-
-
-
-
-
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
@@ -24,6 +18,11 @@
         android:visibility="visible"
         app:itemTextColor="@android:color/white"
         design:menu="@menu/menu_information" />
+
+    <TextView
+        android:id="@+id/appView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 
 </android.support.design.widget.CoordinatorLayout>

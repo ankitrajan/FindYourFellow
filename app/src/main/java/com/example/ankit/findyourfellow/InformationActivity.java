@@ -18,10 +18,11 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class InformationActivity extends AppCompatActivity {
 
-    protected TextView idText;
+    protected TextView appInfo;
 
     private FirebaseAuth mAuth;
     private BottomNavigationView bottomNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +31,8 @@ public class InformationActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Information");
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        appInfo = (TextView) findViewById(R.id.appView);
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
 
@@ -78,11 +81,25 @@ public class InformationActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        Toast.makeText(this, "This is a test", Toast.LENGTH_SHORT).show();
+        String thisUser = mAuth.getCurrentUser().getUid().toString();
 
-        //idText = (TextView) findViewById(R.id.userText);
-
-        //idText.setText(mAuth.getCurrentUser().getUid().toString());
+        appInfo.setText("Your User Key is " + thisUser +
+                        ". \nShare this with your friends so they could add you. \n \n" +
+                        "Developers: \n" +
+                        "Galal, Ahmed \n" +
+                        "Pagkaliwangan, Dexter \n" +
+                        "Mondlane, Amilcar \n" +
+                        "Rajan, Ankit \n" +
+                        "Tshimombi, Sylvain \n \n" +
+                        "This app lets you keep track of friends. It also allows your " +
+                        "friends to keep track of you so that a fun night out stays, " +
+                        "well, a FUN night out. To do so, and by downloading this " +
+                        "app, you allow us to store your location so that it can be " +
+                        "relayed to your friends. Your location will not be sold to " +
+                        "any third party. This app is not to be used in unethical " +
+                        "ways. This App also doesn't mean you can drink as much " +
+                        "as you want. Please follow the recommended amount set " +
+                        "by your government. Apart from that, PARTY HARD. ");
     }
 
     private void userSignOut()

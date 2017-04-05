@@ -208,9 +208,9 @@ public class TrackAdapter extends ArrayAdapter{
 
         NotificationCompat.Builder builder =
                 (NotificationCompat.Builder) new NotificationCompat.Builder(getContext())
-                        .setSmallIcon(R.drawable.logomain2) //logo
-                        .setContentTitle("FindyourFellow App: ALERT!!!") //large text
-                        .setContentText("Your FRIEND might be in DANGER !!!");// small text
+                        .setSmallIcon(R.drawable.ic_alert) //logo
+                        .setContentTitle("The Bar: ALERT!!!") //large text
+                        .setContentText("FRIEND might be in DANGER !!!");// small text
 
         Intent notificationIntent = new Intent(getContext(), TrackAdapter.class);
         PendingIntent contentIntent = PendingIntent.getActivity(getContext(), 0, notificationIntent,

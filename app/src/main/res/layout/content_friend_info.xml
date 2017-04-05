@@ -9,6 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@android:color/white"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.ankit.findyourfellow.FriendInfoActivity"
     tools:showIn="@layout/activity_friend_info">
@@ -20,74 +21,143 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="99dp"
-        android:layout_marginTop="68dp"
-        android:text="Name" />
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="75dp"
+        android:fontFamily="sans-serif-condensed"
+        android:foregroundGravity="center_vertical"
+        android:text="Name"
+        android:textColor="@android:color/black" />
 
     <TextView
         android:id="@+id/phoneNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/emailAddress"
+        android:layout_alignStart="@+id/emailAddress"
         android:layout_below="@+id/emailAddress"
-        android:layout_marginTop="58dp"
-        android:text="Phone Number" />
+        android:layout_marginTop="29dp"
+        android:fontFamily="sans-serif-condensed"
+        android:foregroundGravity="center_vertical"
+        android:text="Phone Number"
+        android:textColor="@android:color/black" />
 
     <TextView
         android:id="@+id/emergencyContact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="62dp"
-        android:text="Emergency Contact"
+        android:layout_alignStart="@+id/phoneNumber"
         android:layout_below="@+id/phoneNumber"
-        android:layout_alignEnd="@+id/phoneNumber" />
+        android:layout_marginTop="36dp"
+        android:fontFamily="sans-serif-condensed"
+        android:foregroundGravity="center_vertical"
+        android:text="Emergency Contact"
+        android:textColor="@android:color/black" />
 
     <TextView
         android:id="@+id/lastSeen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/emergencyContact"
+        android:layout_alignStart="@+id/emergencyContact"
         android:layout_below="@+id/emergencyContact"
-        android:layout_marginTop="66dp"
-        android:text="Last Seen" />
+        android:layout_marginTop="34dp"
+        android:fontFamily="sans-serif-condensed"
+        android:foregroundGravity="center_vertical"
+        android:text="Last Seen"
+        android:textColor="@android:color/black" />
 
     <TextView
         android:id="@+id/emailView"
-        android:layout_width="wrap_content"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/emailAddress"
-        android:layout_marginStart="50dp"
-        android:layout_toEndOf="@+id/emailAddress" />
+        android:foregroundGravity="center_vertical"
+        android:textColor="@android:color/black"
+        android:layout_alignBaseline="@+id/emailAddress"
+        android:layout_alignBottom="@+id/emailAddress"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/phoneView"
-        android:layout_width="wrap_content"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
+        android:foregroundGravity="center_vertical"
+        android:textColor="@android:color/black"
+        android:autoLink="phone"
+        android:layout_alignBaseline="@+id/phoneNumber"
         android:layout_alignBottom="@+id/phoneNumber"
-        android:layout_alignStart="@+id/emailView" />
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/emergencyView"
-        android:layout_width="wrap_content"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/phoneView"
-        android:layout_alignTop="@+id/emergencyContact" />
+        android:foregroundGravity="center_vertical"
+        android:textColor="@android:color/black"
+        android:autoLink="phone"
+        android:layout_alignBaseline="@+id/emergencyContact"
+        android:layout_alignBottom="@+id/emergencyContact"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/lastView"
-        android:layout_width="wrap_content"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/emergencyView"
-        android:layout_alignTop="@+id/lastSeen" />
+        android:layout_alignTop="@+id/lastSeen"
+        android:foregroundGravity="center_vertical"
+        android:textColor="@android:color/black" />
 
     <Button
         android:id="@+id/mapButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="130dp"
+        android:layout_height="35dp"
+        android:background="@drawable/button_selector"
         android:text="See On Map"
-        android:layout_marginTop="54dp"
-        android:layout_below="@+id/lastSeen"
+        android:layout_marginBottom="99dp"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="30dp"
+        android:layout_height="25dp"
+        android:layout_alignBottom="@+id/lastSeen"
+        android:layout_alignEnd="@+id/imageView7"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/lastSeen"
+        android:foregroundGravity="center_vertical"
+        app:srcCompat="@drawable/lastseen" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="30dp"
+        android:layout_height="25dp"
+        android:layout_alignBottom="@+id/emailAddress"
+        android:layout_alignEnd="@+id/imageView12"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/emailAddress"
+        android:foregroundGravity="center_vertical"
+        app:srcCompat="@drawable/userwhite" />
+
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="30dp"
+        android:layout_height="25dp"
+        android:layout_alignBottom="@+id/phoneNumber"
+        android:layout_alignEnd="@+id/imageView9"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/phoneNumber"
+        android:foregroundGravity="center_vertical"
+        app:srcCompat="@drawable/phone" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="30dp"
+        android:layout_height="25dp"
+        android:layout_alignBottom="@+id/emergencyContact"
+        android:layout_alignTop="@+id/emergencyContact"
+        android:layout_marginEnd="7dp"
+        android:layout_toStartOf="@+id/emergencyContact"
+        android:foregroundGravity="center_vertical"
+        app:srcCompat="@drawable/emergencyicon" />
 </RelativeLayout>
 
 

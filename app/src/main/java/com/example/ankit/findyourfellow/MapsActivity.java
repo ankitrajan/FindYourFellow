@@ -71,7 +71,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 mMap.clear();
 
                 LatLng coordinates = new LatLng(lat, lng);
-                mMap.addMarker(new MarkerOptions().position(coordinates).title("You friend is here"));
+                mMap.addMarker(new MarkerOptions().position(coordinates).title("Friend's Location"));
                 mMap.getUiSettings().setMapToolbarEnabled(false);
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 15));
             }

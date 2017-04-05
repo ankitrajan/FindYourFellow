@@ -30,25 +30,25 @@
         android:id="@+id/createLastName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/createFirstName"
-        android:layout_below="@+id/createFirstName"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="13dp"
         android:ems="10"
         android:fontFamily="sans-serif-condensed"
         android:hint="Last Name"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:layout_below="@+id/createFirstName"
+        android:layout_alignStart="@+id/createFirstName" />
 
     <EditText
         android:id="@+id/createAge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/createLastName"
-        android:layout_below="@+id/createLastName"
-        android:layout_marginTop="19dp"
+        android:layout_marginTop="13dp"
         android:ems="10"
         android:fontFamily="sans-serif-condensed"
         android:hint="Age"
-        android:inputType="number" />
+        android:inputType="number"
+        android:layout_below="@+id/createLastName"
+        android:layout_alignStart="@+id/createLastName" />
 
     <EditText
         android:id="@+id/createEmail"
@@ -58,7 +58,7 @@
         android:fontFamily="sans-serif-condensed"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:layout_marginTop="19dp"
+        android:layout_marginTop="13dp"
         android:layout_below="@+id/createAge"
         android:layout_alignStart="@+id/createAge" />
 
@@ -66,25 +66,25 @@
         android:id="@+id/createPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/createEmail"
-        android:layout_below="@+id/createEmail"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:fontFamily="sans-serif-condensed"
         android:hint="Password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:layout_below="@+id/createEmail"
+        android:layout_alignStart="@+id/createEmail" />
 
     <EditText
         android:id="@+id/createNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/createPassword"
-        android:layout_below="@+id/createPassword"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="11dp"
         android:ems="10"
         android:fontFamily="sans-serif-condensed"
         android:hint="Phone Number"
-        android:inputType="phone" />
+        android:inputType="phone"
+        android:layout_below="@+id/createPassword"
+        android:layout_alignStart="@+id/createPassword" />
 
     <Button
         android:id="@+id/newProfileButton"
@@ -94,9 +94,9 @@
         android:fontFamily="sans-serif-condensed"
         android:text="Create Profile"
         android:textColor="@android:color/white"
+        android:layout_marginBottom="32dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="11dp" />
+        android:layout_centerHorizontal="true" />
 
     <ImageView
         android:id="@+id/imageView"
