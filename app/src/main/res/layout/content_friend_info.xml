@@ -29,11 +29,23 @@
         android:textColor="@android:color/black" />
 
     <TextView
-        android:id="@+id/phoneNumber"
+        android:id="@+id/lastSeen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/emailAddress"
         android:layout_below="@+id/emailAddress"
+        android:layout_marginTop="34dp"
+        android:fontFamily="sans-serif-condensed"
+        android:foregroundGravity="center_vertical"
+        android:text="Last Seen"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:id="@+id/phoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/lastSeen"
+        android:layout_below="@+id/lastSeen"
         android:layout_marginTop="29dp"
         android:fontFamily="sans-serif-condensed"
         android:foregroundGravity="center_vertical"
@@ -46,22 +58,10 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/phoneNumber"
         android:layout_below="@+id/phoneNumber"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="29dp"
         android:fontFamily="sans-serif-condensed"
         android:foregroundGravity="center_vertical"
         android:text="Emergency Contact"
-        android:textColor="@android:color/black" />
-
-    <TextView
-        android:id="@+id/lastSeen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/emergencyContact"
-        android:layout_below="@+id/emergencyContact"
-        android:layout_marginTop="34dp"
-        android:fontFamily="sans-serif-condensed"
-        android:foregroundGravity="center_vertical"
-        android:text="Last Seen"
         android:textColor="@android:color/black" />
 
     <TextView
@@ -86,6 +86,15 @@
         android:layout_alignParentEnd="true" />
 
     <TextView
+        android:id="@+id/lastView"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/emergencyView"
+        android:layout_alignTop="@+id/lastSeen"
+        android:foregroundGravity="center_vertical"
+        android:textColor="@android:color/black" />
+
+    <TextView
         android:id="@+id/emergencyView"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
@@ -96,22 +105,13 @@
         android:layout_alignBottom="@+id/emergencyContact"
         android:layout_alignParentEnd="true" />
 
-    <TextView
-        android:id="@+id/lastView"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/emergencyView"
-        android:layout_alignTop="@+id/lastSeen"
-        android:foregroundGravity="center_vertical"
-        android:textColor="@android:color/black" />
-
     <Button
         android:id="@+id/mapButton"
         android:layout_width="130dp"
         android:layout_height="35dp"
         android:background="@drawable/button_selector"
         android:text="See On Map"
-        android:layout_marginBottom="99dp"
+        android:layout_marginBottom="40dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
@@ -158,6 +158,29 @@
         android:layout_toStartOf="@+id/emergencyContact"
         android:foregroundGravity="center_vertical"
         app:srcCompat="@drawable/emergencyicon" />
+
+    <TextView
+        android:id="@+id/emergency2View"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:autoLink="phone"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/emergencyView"
+        android:layout_below="@+id/emergencyView"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:id="@+id/emergency3View"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:autoLink="phone"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/emergency2View"
+        android:layout_below="@+id/emergency2View"
+        android:layout_marginTop="30dp" />
+
 </RelativeLayout>
 
 

@@ -24,6 +24,8 @@ public class FriendInfoActivity extends AppCompatActivity {
     protected TextView email;
     protected TextView phone;
     protected TextView emergency;
+    protected TextView emergency2;
+    protected TextView emergency3;
     protected TextView time;
 
     protected Button map;
@@ -43,6 +45,8 @@ public class FriendInfoActivity extends AppCompatActivity {
         email = (TextView) findViewById(R.id.emailView);
         phone = (TextView) findViewById(R.id.phoneView);
         emergency = (TextView) findViewById(R.id.emergencyView);
+        emergency2 = (TextView) findViewById(R.id.emergency2View);
+        emergency3 = (TextView) findViewById(R.id.emergency3View);
         time = (TextView) findViewById(R.id.lastView);
 
 
@@ -58,6 +62,17 @@ public class FriendInfoActivity extends AppCompatActivity {
                 phone.setText(dataSnapshot.child("PhoneNumber").getValue().toString());
                 emergency.setText(dataSnapshot.child("EmergencyNumber1").getValue().toString());
                 time.setText(dataSnapshot.child("LastUpdate").getValue().toString());
+
+                if(dataSnapshot.child("EmergencyNumber2").exists())
+                {
+                    emergency2.setText(dataSnapshot.child("EmergencyNumber2").getValue().toString());
+                }
+
+                if(dataSnapshot.child("EmergencyNumber3").exists())
+                {
+                    emergency3.setText(dataSnapshot.child("EmergencyNumber3").getValue().toString());
+                }
+
             }
 
             @Override

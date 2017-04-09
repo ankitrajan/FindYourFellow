@@ -89,9 +89,9 @@ public class LocationHelper extends Service
 
         //Toast.makeText(this, "Attempting to get location", Toast.LENGTH_SHORT).show();
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,30000,0, listener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,5000,0, listener);
 
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,30000,0, listener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,5000,0, listener);
     }
 
     @Override

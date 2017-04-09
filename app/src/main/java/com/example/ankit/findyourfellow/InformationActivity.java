@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ public class InformationActivity extends AppCompatActivity {
 
     protected TextView appInfo;
     protected TextView thisUser;
+    protected Button userEdit;
     private FirebaseAuth mAuth;
     private BottomNavigationView bottomNavigationView;
 
@@ -33,6 +35,8 @@ public class InformationActivity extends AppCompatActivity {
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         appInfo = (TextView) findViewById(R.id.appView);
+
+        userEdit = (Button) findViewById(R.id.editUser);
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
 
@@ -77,6 +81,13 @@ public class InformationActivity extends AppCompatActivity {
             }
         });
 
+        userEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToEditProfileActivity();
+            }
+        });
+
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         mAuth = FirebaseAuth.getInstance();
@@ -87,22 +98,20 @@ public class InformationActivity extends AppCompatActivity {
 
 
 
-        appInfo.setText( "\n"                          +
-                        "Share this with your friends so they could add you. \n \n" +
+        appInfo.setText("Share this with your friends so they could add you. \n \n" +
                         "Developers: \n" +
-                        "\n"                       +
                         "Galal, Ahmed \n" +
                         "Mondlane, Amilcar \n" +
                         "Pagkaliwangan, Dexter \n" +
                         "Rajan, Ankit \n" +
-                        "Tshimombi, Sylvain \n \n" +
+                        "Tshimombo, Sylvain \n \n" +
                         "This app lets you keep track of friends. It also allows your " +
                         "friends to keep track of you so that a fun night out stays, " +
                         "well, a FUN night out. To do so, and by downloading this " +
                         "app, you allow us to store your location so that it can be " +
-                        "relayed to your friends. Your location will not be sold to " +
+                        "relayed to your friends. To keep the accuracy of the data, please refrain from login in from multiple devices simultaneously. Your location will not be sold to " +
                         "any third party. This app is not to be used in unethical " +
-                        "ways. This App also doesn't mean you can drink as much " +
+                        "ways. This app also doesn't mean you can drink as much " +
                         "as you want. Please follow the recommended amount set " +
                         "by your government. Apart from that, PARTY HARD!!! \n\nSpecial Thanks to Dr.Lynch, Dr. Patel, Mr. Fajardo and StackOverflow!");
     }
@@ -123,6 +132,12 @@ public class InformationActivity extends AppCompatActivity {
     void goToManageActivity()
     {
         Intent intent = new Intent(InformationActivity.this, ManageFriendsActivity.class);
+        startActivity(intent);
+    }
+
+    void goToEditProfileActivity()
+    {
+        Intent intent = new Intent(InformationActivity.this, EditProfileActivity.class);
         startActivity(intent);
     }
 

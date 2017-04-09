@@ -23,4 +23,5 @@
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_edit_friend">EditFriendActivity</string>
     <string name="title_activity_edit_name">EditNameActivity</string>
+    <string name="title_activity_edit_profile">EditProfileActivity</string>
 </resources>

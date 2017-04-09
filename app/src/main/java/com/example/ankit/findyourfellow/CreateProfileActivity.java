@@ -19,6 +19,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
@@ -101,7 +104,7 @@ public class CreateProfileActivity extends AppCompatActivity {
                         {
                             if (!(task.isSuccessful()))
                             {
-                                Toast.makeText(CreateProfileActivity.this, "Account not created", Toast.LENGTH_LONG).show();
+                                Toast.makeText(CreateProfileActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                             }
                             else
                             {

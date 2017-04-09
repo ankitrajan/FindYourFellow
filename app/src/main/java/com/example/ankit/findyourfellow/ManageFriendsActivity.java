@@ -42,7 +42,7 @@ public class ManageFriendsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("Manager Activity");
+        getSupportActionBar().setTitle("Manage Friends");
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
 

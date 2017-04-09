@@ -26,7 +26,7 @@ public class EditNameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_name);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Edit Friends");
+        getSupportActionBar().setTitle("Edit Friend Name");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

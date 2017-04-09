@@ -111,6 +111,18 @@
                 android:value="com.example.ankit.findyourfellow.ManageFriendsActivity" />
             >
         </activity>
+        <activity
+            android:name=".EditProfileActivity"
+            android:label="@string/title_activity_edit_profile"
+            android:parentActivityName=".InformationActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.ankit.findyourfellow.InformationActivity" />
+            >
+        </activity>
+
+
     </application>
 
 </manifest>
