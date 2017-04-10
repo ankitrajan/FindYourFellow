@@ -199,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }
         else
-            Toast.makeText(this, "Email field(s) is empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Email field is empty", Toast.LENGTH_SHORT).show();
 
     }
 
