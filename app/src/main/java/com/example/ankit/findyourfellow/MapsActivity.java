@@ -32,7 +32,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        getSupportActionBar().setTitle(getIntent().getExtras().getString("FRIENDNAME") + " Location");
+        getSupportActionBar().setTitle(getIntent().getExtras().getString("FRIENDNAME"));
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -73,7 +73,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 mMap.clear();
 
                 LatLng coordinates = new LatLng(lat, lng);
-                mMap.addMarker(new MarkerOptions().position(coordinates).title("Friend's Location"));
+                mMap.addMarker(new MarkerOptions().position(coordinates).title("Current Location"));
                 mMap.getUiSettings().setMapToolbarEnabled(false);
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 15));
             }
