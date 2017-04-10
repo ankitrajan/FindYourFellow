@@ -21,6 +21,7 @@
         android:ems="10"
         android:fontFamily="sans-serif-condensed"
         android:hint="First Name"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVQXYZ"
         android:inputType="textPersonName"
         android:textColor="@android:color/black"
         android:layout_alignBottom="@+id/imageView"
@@ -34,6 +35,7 @@
         android:ems="10"
         android:fontFamily="sans-serif-condensed"
         android:hint="Last Name"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVQXYZ"
         android:inputType="textPersonName"
         android:layout_below="@+id/createFirstName"
         android:layout_alignStart="@+id/createFirstName" />
@@ -46,6 +48,7 @@
         android:ems="10"
         android:fontFamily="sans-serif-condensed"
         android:hint="Age"
+        android:maxLength="3"
         android:inputType="number"
         android:layout_below="@+id/createLastName"
         android:layout_alignStart="@+id/createLastName" />
@@ -83,7 +86,7 @@
         android:fontFamily="sans-serif-condensed"
         android:hint="Phone Number"
         android:inputType="phone"
-        android:maxLength="9"
+        android:maxLength="10"
         android:layout_below="@+id/createPassword"
         android:layout_alignStart="@+id/createPassword" />
 
@@ -114,7 +117,7 @@
         android:layout_alignStart="@+id/createNumber"
         android:layout_below="@+id/createNumber"
         android:layout_marginTop="12dp"
-        android:maxLength="9"
+        android:maxLength="10"
         android:ems="10"
         android:fontFamily="sans-serif-condensed"
         android:hint="Emergency Number"

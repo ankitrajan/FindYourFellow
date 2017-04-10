@@ -352,9 +352,9 @@ public class MainActivity extends AppCompatActivity {
     private void addNotification() {
         NotificationCompat.Builder builder =
                 (NotificationCompat.Builder) new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.logomain2) //logo
-                        .setContentTitle("Alert! No Internet") //large text
-                        .setContentText("You have no internet, connect to use app");// small text
+                        .setSmallIcon(R.drawable.ic_nointernet) //logo
+                        .setContentTitle("The Bar : Alert! ") //large text
+                        .setContentText("No Internet Connection, needed to use app");// small text
 
         Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent,

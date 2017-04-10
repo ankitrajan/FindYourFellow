@@ -125,6 +125,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         if(!(TextUtils.isEmpty(fName) || TextUtils.isEmpty(lName) || TextUtils.isEmpty(newAge) || TextUtils.isEmpty(phoneNumber) || TextUtils.isEmpty(emergencyNumber1)))
         {
+
             String thisUser = mAuth.getCurrentUser().getUid().toString();
 
             Firebase userInfoRef = new Firebase("https://findyourfellow.firebaseio.com/Users/" + thisUser +"/Information/");
@@ -133,15 +134,44 @@ public class EditProfileActivity extends AppCompatActivity {
 
             userInfoRef.child("LastName").setValue(lName);
 
-            userInfoRef.child("Age").setValue(newAge);
 
-            userInfoRef.child("PhoneNumber").setValue(phoneNumber);
+            if(Double.parseDouble(newAge) < 123)
+            {
+                userInfoRef.child("Age").setValue(newAge);
+            }
+            else
+            {
+                Toast.makeText(this, "Are you really " + newAge + " years old?", Toast.LENGTH_SHORT).show();
+            }
 
-            userInfoRef.child("EmergencyNumber1").setValue(emergencyNumber1);
+            if(phoneNumber.length()<10)
+            {
+                Toast.makeText(this, "Phone number length incorrect", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                userInfoRef.child("PhoneNumber").setValue(phoneNumber);
+            }
+
+            if(emergencyNumber1.length()<10)
+            {
+                Toast.makeText(this, "Emergency Number 1 incorrect", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                userInfoRef.child("EmergencyNumber1").setValue(phoneNumber);
+            }
 
             if(!(TextUtils.isEmpty(emergencyNumber2)))
             {
-                userInfoRef.child("EmergencyNumber2").setValue(emergencyNumber2);
+                if(emergencyNumber2.length()<10)
+                {
+                    Toast.makeText(this, "Emergency Number 2 length incorrect", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    userInfoRef.child("EmergencyNumber2").setValue(emergencyNumber2);
+                }
             }
             else
             {
@@ -150,12 +180,21 @@ public class EditProfileActivity extends AppCompatActivity {
 
             if(!(TextUtils.isEmpty(emergencyNumber3)))
             {
-                userInfoRef.child("EmergencyNumber3").setValue(emergencyNumber3);
+                if(emergencyNumber3.length()<10)
+                {
+                    Toast.makeText(this, "Emergency Number 3 length incorrect", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    userInfoRef.child("EmergencyNumber3").setValue(emergencyNumber3);
+                }
             }
             else
             {
                 userInfoRef.child("EmergencyNumber3").removeValue();
             }
+
+            Toast.makeText(this, "Profile Updated", Toast.LENGTH_SHORT).show();
 
             goToInformationActivity();
         }

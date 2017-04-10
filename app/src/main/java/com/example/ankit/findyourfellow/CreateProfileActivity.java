@@ -95,121 +95,135 @@ public class CreateProfileActivity extends AppCompatActivity {
 
         if(!(TextUtils.isEmpty(firstName) || TextUtils.isEmpty(lastName) || TextUtils.isEmpty(age) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password) ||  TextUtils.isEmpty(phoneNumber) || TextUtils.isEmpty(emergencyNumber)))
         {
-            mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
-                    {
+            if (phoneNumber.length() == 10 && emergencyNumber.length() == 10 && Double.parseDouble(age) < 123)
+            {
+                mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
 
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task)
-                        {
-                            if (!(task.isSuccessful()))
-                            {
-                                Toast.makeText(CreateProfileActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                            }
-                            else
-                            {
-                                FirebaseUser user = mAuth.getCurrentUser();
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (!(task.isSuccessful())) {
+                                    Toast.makeText(CreateProfileActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                } else {
+                                    FirebaseUser user = mAuth.getCurrentUser();
 
-                                user.sendEmailVerification()
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    // email sent
+                                    user.sendEmailVerification()
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        // email sent
 
-                                                    Toast.makeText(CreateProfileActivity.this, "Verification email was sent", Toast.LENGTH_LONG).show();
+                                                        Toast.makeText(CreateProfileActivity.this, "Verification email was sent", Toast.LENGTH_LONG).show();
 
-                                                    String newUser = mAuth.getCurrentUser().getUid().toString();
+                                                        String newUser = mAuth.getCurrentUser().getUid().toString();
 
-                                                    UserProfileChangeRequest.Builder builder = new UserProfileChangeRequest.Builder();
-                                                    builder.setDisplayName(firstName + " " + lastName);
+                                                        UserProfileChangeRequest.Builder builder = new UserProfileChangeRequest.Builder();
+                                                        builder.setDisplayName(firstName + " " + lastName);
 
-                                                    mAuth.getCurrentUser().updateProfile(builder.build()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<Void> task) {
-                                                            if (task.isSuccessful()) {
-                                                                if (mAuth.getCurrentUser().getDisplayName() != null) {
-                                                                    Toast.makeText(CreateProfileActivity.this, "Display name: " + mAuth.getCurrentUser().getDisplayName().toString(), Toast.LENGTH_SHORT).show();}
-                                                            } else {
-                                                                Toast.makeText(CreateProfileActivity.this, "Display name not saved", Toast.LENGTH_SHORT).show();
+                                                        mAuth.getCurrentUser().updateProfile(builder.build()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                if (task.isSuccessful()) {
+                                                                    if (mAuth.getCurrentUser().getDisplayName() != null) {
+                                                                        Toast.makeText(CreateProfileActivity.this, "Display name: " + mAuth.getCurrentUser().getDisplayName().toString(), Toast.LENGTH_SHORT).show();
+                                                                    }
+                                                                } else {
+                                                                    Toast.makeText(CreateProfileActivity.this, "Display name not saved", Toast.LENGTH_SHORT).show();
+                                                                }
                                                             }
-                                                        }
-                                                    });
+                                                        });
 
 
-                                                    Firebase childRef = mRootRef.child(newUser);
+                                                        Firebase childRef = mRootRef.child(newUser);
 
-                                                    Firebase infoRef = mRootRef.child("Information");
-                                                    Firebase reqRef = mRootRef.child("FriendRequest");
-                                                    Firebase friendRef = mRootRef.child("Information");
+                                                        Firebase infoRef = mRootRef.child("Information");
+                                                        Firebase reqRef = mRootRef.child("FriendRequest");
+                                                        Firebase friendRef = mRootRef.child("Information");
 
 
-                                                    Firebase newRef = new Firebase("https://findyourfellow.firebaseio.com/Users/" + newUser +"/Information/");
+                                                        Firebase newRef = new Firebase("https://findyourfellow.firebaseio.com/Users/" + newUser + "/Information/");
 
-                                                    Firebase firstRef = newRef.child("FirstName");
+                                                        Firebase firstRef = newRef.child("FirstName");
 
-                                                    firstRef.setValue(firstName);
+                                                        firstRef.setValue(firstName);
 
-                                                    Firebase lastRef = newRef.child("LastName");
+                                                        Firebase lastRef = newRef.child("LastName");
 
-                                                    lastRef.setValue(lastName);
+                                                        lastRef.setValue(lastName);
 
-                                                    Firebase ageRef = newRef.child("Age");
+                                                        Firebase ageRef = newRef.child("Age");
 
-                                                    ageRef.setValue(age);
+                                                        ageRef.setValue(age);
 
-                                                    Firebase emailRef = newRef.child("Email");
+                                                        Firebase emailRef = newRef.child("Email");
 
-                                                    emailRef.setValue(email);
+                                                        emailRef.setValue(email);
 
-                                                    Firebase passwordRef = newRef.child("Password");
+                                                        Firebase passwordRef = newRef.child("Password");
 
-                                                    passwordRef.setValue(password);
+                                                        passwordRef.setValue(password);
 
-                                                    Firebase phoneRef = newRef.child("PhoneNumber");
+                                                        Firebase phoneRef = newRef.child("PhoneNumber");
 
-                                                    phoneRef.setValue(phoneNumber);
+                                                        phoneRef.setValue(phoneNumber);
 
-                                                    Firebase emergencyRef = newRef.child("EmergencyNumber1");
+                                                        Firebase emergencyRef = newRef.child("EmergencyNumber1");
 
-                                                    emergencyRef.setValue(emergencyNumber);
+                                                        emergencyRef.setValue(emergencyNumber);
 
-                                                    Firebase latitudeRef = newRef.child("Latitude");
+                                                        Firebase latitudeRef = newRef.child("Latitude");
 
-                                                    latitudeRef.setValue("0");
+                                                        latitudeRef.setValue("0");
 
-                                                    Firebase longitudeRef = newRef.child("Longitude");
+                                                        Firebase longitudeRef = newRef.child("Longitude");
 
-                                                    longitudeRef.setValue("0");
+                                                        longitudeRef.setValue("0");
 
-                                                    Firebase timeRef = newRef.child("LastUpdate");
+                                                        Firebase timeRef = newRef.child("LastUpdate");
 
-                                                    timeRef.setValue("0");
+                                                        timeRef.setValue("0");
 
-                                                    Firebase trackRef = newRef.child("Tracking");
+                                                        Firebase trackRef = newRef.child("Tracking");
 
-                                                    trackRef.setValue("no");
+                                                        trackRef.setValue("no");
 
-                                                    // after email is sent just logout the user and finish this activity
-                                                    mAuth.signOut();
+                                                        // after email is sent just logout the user and finish this activity
+                                                        mAuth.signOut();
 
-                                                    startActivity(new Intent(CreateProfileActivity.this, MainActivity.class));
-                                                    finish();
+                                                        startActivity(new Intent(CreateProfileActivity.this, MainActivity.class));
+                                                        finish();
+                                                    } else {
+                                                        // email not sent, so display message and restart the activity or do whatever you wish to do
+
+                                                        //restart this activity
+                                                        Toast.makeText(CreateProfileActivity.this, "Email could not be verified", Toast.LENGTH_LONG).show();
+                                                        finish();
+
+                                                    }
                                                 }
-                                                else
-                                                {
-                                                    // email not sent, so display message and restart the activity or do whatever you wish to do
-
-                                                    //restart this activity
-                                                    Toast.makeText(CreateProfileActivity.this, "Email could not be verified", Toast.LENGTH_LONG).show();
-                                                    finish();
-
-                                                }
-                                            }
-                                        });
+                                            });
+                                }
                             }
-                        }
-                    });
+                        });
+            }
+            else
+            {
+                if(Double.parseDouble(age) > 122)
+                {
+                    Toast.makeText(this, "Are you really " + age + " years old?", Toast.LENGTH_LONG).show();
+                }
+
+                if(phoneNumber.length() != 10)
+                {
+                    Toast.makeText(this, "Phone number length incorrect", Toast.LENGTH_LONG).show();
+                }
+
+                if(emergencyNumber.length() != 10)
+                {
+                    Toast.makeText(this, "Emergency number length incorrect", Toast.LENGTH_LONG).show();
+                }
+            }
         }
         else
         {
