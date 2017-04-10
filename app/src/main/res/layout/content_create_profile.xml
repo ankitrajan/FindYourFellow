@@ -83,6 +83,7 @@
         android:fontFamily="sans-serif-condensed"
         android:hint="Phone Number"
         android:inputType="phone"
+        android:maxLength="9"
         android:layout_below="@+id/createPassword"
         android:layout_alignStart="@+id/createPassword" />
 
@@ -113,6 +114,7 @@
         android:layout_alignStart="@+id/createNumber"
         android:layout_below="@+id/createNumber"
         android:layout_marginTop="12dp"
+        android:maxLength="9"
         android:ems="10"
         android:fontFamily="sans-serif-condensed"
         android:hint="Emergency Number"

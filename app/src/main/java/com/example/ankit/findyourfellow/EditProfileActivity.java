@@ -143,10 +143,18 @@ public class EditProfileActivity extends AppCompatActivity {
             {
                 userInfoRef.child("EmergencyNumber2").setValue(emergencyNumber2);
             }
+            else
+            {
+                userInfoRef.child("EmergencyNumber2").removeValue();
+            }
 
             if(!(TextUtils.isEmpty(emergencyNumber3)))
             {
                 userInfoRef.child("EmergencyNumber3").setValue(emergencyNumber3);
+            }
+            else
+            {
+                userInfoRef.child("EmergencyNumber3").removeValue();
             }
 
             goToInformationActivity();

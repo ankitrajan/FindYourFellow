@@ -98,22 +98,21 @@ public class InformationActivity extends AppCompatActivity {
 
 
 
-        appInfo.setText("Share this with your friends so they could add you. \n \n" +
-                        "Developers: \n" +
+        appInfo.setText("Developers: \n \n" +
                         "Galal, Ahmed \n" +
                         "Mondlane, Amilcar \n" +
                         "Pagkaliwangan, Dexter \n" +
                         "Rajan, Ankit \n" +
                         "Tshimombo, Sylvain \n \n" +
-                        "This app lets you keep track of friends. It also allows your " +
-                        "friends to keep track of you so that a fun night out stays, " +
-                        "well, a FUN night out. To do so, and by downloading this " +
-                        "app, you allow us to store your location so that it can be " +
-                        "relayed to your friends. To keep the accuracy of the data, please refrain from login in from multiple devices simultaneously. Your location will not be sold to " +
-                        "any third party. This app is not to be used in unethical " +
-                        "ways. This app also doesn't mean you can drink as much " +
-                        "as you want. Please follow the recommended amount set " +
-                        "by your government. Apart from that, PARTY HARD!!! \n\nSpecial Thanks to Dr.Lynch, Dr. Patel, Mr. Fajardo and StackOverflow!");
+                        "This application would be able to track, locate and send " +
+                        "coordinates of a person's location to their friends or acquaintances " +
+                        "by recording distance and changes in direction that person makes as they travel. The whole purpose " +
+                        "of this application is to allow users to locate their beloved ones to provide a sense of control " +
+                        "and additional security and safety, letting the users know what is going on with their friends. To keep the accuracy of the data, please refrain from login " +
+                        "in from multiple devices simultaneously. Your location will not be sold to any third party. This app is not to be used in unethical ways. " +
+                        "This app also doesn't mean you can drink as much as you want. \n" +
+                        "Please follow the recommended amount set " +
+                        "by your government.  \n\n   Special Thanks to Dr. Lynch, Dr. Patel, Mr. Fajardo and StackOverflow!");
     }
 
     private void userSignOut()

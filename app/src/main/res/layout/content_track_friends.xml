@@ -51,7 +51,7 @@
         android:layout_height="30dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:text=" Track Friends"
+        android:text=" Enable Tracking "
         android:textColor="@android:color/black" />
 
     <TextView
