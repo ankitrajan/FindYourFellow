@@ -52,6 +52,7 @@
         android:textColorHint="@android:color/white"
         android:ems="10"
         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVQXYZ "
+        android:maxLength="26"
         android:inputType="textPersonName"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:visibility="visible" />

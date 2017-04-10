@@ -79,6 +79,7 @@
         android:fontFamily="sans-serif-condensed"
         android:inputType="textEmailAddress"
         android:scaleType="center"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!#$%'*+-/=?^_`{|}~.amp"
         android:textColor="@android:color/white"
         android:background="@android:color/transparent"
         android:textSize="12sp"

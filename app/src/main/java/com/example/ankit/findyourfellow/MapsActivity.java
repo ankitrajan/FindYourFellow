@@ -30,8 +30,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_maps);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Friend Location");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        getSupportActionBar().setTitle(getIntent().getExtras().getString("FRIENDNAME") + " Location");
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -55,6 +56,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Bundle extras = getIntent().getExtras();
         String friendKey = extras.getString("FRIENDKEY");
         String userKey = extras.getString("USERKEY");
+
 
         Firebase friendInfoRef = new Firebase("https://findyourfellow.firebaseio.com/Users/" + getIntent().getStringExtra("FRIENDKEY") + "/Information");
 

@@ -135,6 +135,7 @@ public class TrackAdapter extends ArrayAdapter{
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("FRIENDKEY", (String) getId(currentPosition));
                     intent.putExtra("USERKEY", mAuth.getCurrentUser().getUid().toString());
+                    intent.putExtra("FRIENDNAME", (String) getItem(currentPosition));
                     c.startActivity(intent);
                 }
             });

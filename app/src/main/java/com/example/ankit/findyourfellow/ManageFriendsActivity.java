@@ -41,7 +41,6 @@ public class ManageFriendsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_manage_friends);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setTitle("Manage Friends");
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
