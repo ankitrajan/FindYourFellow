@@ -171,7 +171,7 @@ public class EditProfileActivity extends AppCompatActivity {
             }
             else
             {
-                userInfoRef.child("EmergencyNumber1").setValue(phoneNumber);
+                userInfoRef.child("EmergencyNumber1").setValue(emergencyNumber1);
             }
         }
 
