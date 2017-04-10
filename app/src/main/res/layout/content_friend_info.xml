@@ -81,7 +81,6 @@
         android:foregroundGravity="center_vertical"
         android:textColor="@android:color/black"
         android:autoLink="phone"
-        android:maxLength="9"
         android:layout_alignBaseline="@+id/phoneNumber"
         android:layout_alignBottom="@+id/phoneNumber"
         android:layout_alignParentEnd="true" />
@@ -102,7 +101,6 @@
         android:foregroundGravity="center_vertical"
         android:textColor="@android:color/black"
         android:autoLink="phone"
-        android:maxLength="9"
         android:layout_marginTop="32dp"
         android:layout_below="@+id/emergencyContact"
         android:layout_alignParentEnd="true" />
@@ -167,7 +165,6 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:autoLink="phone"
-        android:maxLength="9"
         android:layout_alignParentEnd="true"
         android:layout_alignStart="@+id/emergencyView"
         android:layout_below="@+id/emergencyView"
@@ -179,7 +176,6 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:autoLink="phone"
-        android:maxLength="9"
         android:layout_alignParentEnd="true"
         android:layout_alignStart="@+id/emergency2View"
         android:layout_below="@+id/emergency2View"
