@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -19,14 +17,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class CreateProfileActivity extends AppCompatActivity {
 
+    private Firebase mRootRef;
+    private FirebaseAuth mAuth;
+
+    private Button mCreate;
 
     private EditText mFirstName;
     private EditText mLastName;
@@ -35,16 +34,6 @@ public class CreateProfileActivity extends AppCompatActivity {
     private EditText mPassword;
     private EditText mNumber;
     private EditText mEmergency;
-
-    private Button mCreate;
-
-
-    private Firebase mRootRef;
-    private FirebaseAuth mAuth;
-
-
-    //
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +44,12 @@ public class CreateProfileActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Create Your Profile");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //Lock into portrait
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        mCreate = (Button) findViewById(R.id.newProfileButton);
 
         mFirstName = (EditText) findViewById(R.id.createFirstName);
         mLastName = (EditText) findViewById(R.id.createLastName);
@@ -65,22 +59,16 @@ public class CreateProfileActivity extends AppCompatActivity {
         mNumber = (EditText) findViewById(R.id.createNumber);
         mEmergency = (EditText) findViewById(R.id.createEmergency);
 
-        mCreate = (Button) findViewById(R.id.newProfileButton);
-
-        mAuth = FirebaseAuth.getInstance();
-
         mRootRef = new Firebase("https://findyourfellow.firebaseio.com/Users");
 
         mCreate.setOnClickListener(new View.OnClickListener()
         {
-
             @Override
             public void onClick(View v)
             {
                 createAccount();
             }
         });
-
     }
 
     private void createAccount()
@@ -103,9 +91,7 @@ public class CreateProfileActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task)
                         {
                             if (!(task.isSuccessful()))
-                            {
                                 Toast.makeText(CreateProfileActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                            }
                             else
                             {
                                 FirebaseUser user = mAuth.getCurrentUser();
@@ -115,12 +101,13 @@ public class CreateProfileActivity extends AppCompatActivity {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()) {
-                                                    // email sent
 
+                                                    // email sent
                                                     Toast.makeText(CreateProfileActivity.this, "Verification email was sent", Toast.LENGTH_LONG).show();
 
                                                     String newUser = mAuth.getCurrentUser().getUid().toString();
 
+                                                    //Save name in Database
                                                     UserProfileChangeRequest.Builder builder = new UserProfileChangeRequest.Builder();
                                                     builder.setDisplayName(firstName + " " + lastName);
 
@@ -128,66 +115,50 @@ public class CreateProfileActivity extends AppCompatActivity {
                                                         @Override
                                                         public void onComplete(@NonNull Task<Void> task) {
                                                             if (task.isSuccessful()) {
-                                                                if (mAuth.getCurrentUser().getDisplayName() != null) {
-                                                                    Toast.makeText(CreateProfileActivity.this, "Display name: " + mAuth.getCurrentUser().getDisplayName().toString(), Toast.LENGTH_SHORT).show();}
-                                                            } else {
-                                                                Toast.makeText(CreateProfileActivity.this, "Display name not saved", Toast.LENGTH_SHORT).show();
+                                                                if (mAuth.getCurrentUser().getDisplayName() != null)
+                                                                    Toast.makeText(CreateProfileActivity.this, "Display name: " + mAuth.getCurrentUser().getDisplayName().toString(), Toast.LENGTH_SHORT).show();
                                                             }
+                                                            else
+                                                                Toast.makeText(CreateProfileActivity.this, "Display name not saved", Toast.LENGTH_SHORT).show();
                                                         }
                                                     });
 
-
+                                                    //Save details into online database
                                                     Firebase childRef = mRootRef.child(newUser);
-
-                                                    Firebase infoRef = mRootRef.child("Information");
-                                                    Firebase reqRef = mRootRef.child("FriendRequest");
-                                                    Firebase friendRef = mRootRef.child("Information");
-
 
                                                     Firebase newRef = new Firebase("https://findyourfellow.firebaseio.com/Users/" + newUser +"/Information/");
 
                                                     Firebase firstRef = newRef.child("FirstName");
-
                                                     firstRef.setValue(firstName);
 
                                                     Firebase lastRef = newRef.child("LastName");
-
                                                     lastRef.setValue(lastName);
 
                                                     Firebase ageRef = newRef.child("Age");
-
                                                     ageRef.setValue(age);
 
                                                     Firebase emailRef = newRef.child("Email");
-
                                                     emailRef.setValue(email);
 
                                                     Firebase passwordRef = newRef.child("Password");
-
                                                     passwordRef.setValue(password);
 
                                                     Firebase phoneRef = newRef.child("PhoneNumber");
-
                                                     phoneRef.setValue(phoneNumber);
 
                                                     Firebase emergencyRef = newRef.child("EmergencyNumber1");
-
                                                     emergencyRef.setValue(emergencyNumber);
 
                                                     Firebase latitudeRef = newRef.child("Latitude");
-
                                                     latitudeRef.setValue("0");
 
                                                     Firebase longitudeRef = newRef.child("Longitude");
-
                                                     longitudeRef.setValue("0");
 
                                                     Firebase timeRef = newRef.child("LastUpdate");
-
                                                     timeRef.setValue("0");
 
                                                     Firebase trackRef = newRef.child("Tracking");
-
                                                     trackRef.setValue("no");
 
                                                     // after email is sent just logout the user and finish this activity
@@ -198,12 +169,9 @@ public class CreateProfileActivity extends AppCompatActivity {
                                                 }
                                                 else
                                                 {
-                                                    // email not sent, so display message and restart the activity or do whatever you wish to do
-
-                                                    //restart this activity
+                                                    // email not sent, so display message and restart the activity
                                                     Toast.makeText(CreateProfileActivity.this, "Email could not be verified", Toast.LENGTH_LONG).show();
                                                     finish();
-
                                                 }
                                             }
                                         });
@@ -212,11 +180,6 @@ public class CreateProfileActivity extends AppCompatActivity {
                     });
         }
         else
-        {
             Toast.makeText(CreateProfileActivity.this, "Field(s) cannot be left empty", Toast.LENGTH_LONG).show();
-        }
-
-
     }
-
 }

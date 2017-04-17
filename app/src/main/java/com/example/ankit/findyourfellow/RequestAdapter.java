@@ -19,7 +19,8 @@ import java.util.List;
 public class RequestAdapter extends ArrayAdapter {
 
     private FirebaseAuth mAuth;
-    private List name = new ArrayList(); //name
+
+    private List name = new ArrayList();
     private List id = new ArrayList();
 
     public RequestAdapter(Context context, int resource)
@@ -65,6 +66,7 @@ public class RequestAdapter extends ArrayAdapter {
 
         final int currentPosition = position;
 
+        //Inflate row
         if (convertView == null)
         {
             LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -78,26 +80,22 @@ public class RequestAdapter extends ArrayAdapter {
 
             holder.ACCEPT.setOnClickListener(new View.OnClickListener()
             {
-
                 @Override
                 public void onClick(View v)
                 {
                     mAuth = FirebaseAuth.getInstance();
 
+
+                    //Add users to eachother if accept button clicked
                     String friendId = (String) getId(currentPosition);
-
                     String userId = mAuth.getCurrentUser().getUid().toString();
-
                     String userEmail = mAuth.getCurrentUser().getDisplayName().toString();
 
                     Firebase friendRef = new Firebase("https://findyourfellow.firebaseio.com/Users/" + friendId);
-
                     Firebase userRef = new Firebase("https://findyourfellow.firebaseio.com/Users/" + userId);
 
                     userRef.child("Friends").child(friendId).setValue((String) getItem(currentPosition));
-
                     friendRef.child("Friends").child(userId).setValue(userEmail);
-
                     userRef.child("FriendRequest").child(friendId).removeValue();
 
                     Toast.makeText(getContext(), "Friend added", Toast.LENGTH_SHORT).show();
@@ -106,14 +104,13 @@ public class RequestAdapter extends ArrayAdapter {
 
             holder.DECLINE.setOnClickListener(new View.OnClickListener()
             {
-
                 @Override
                 public void onClick(View v)
                 {
                     mAuth = FirebaseAuth.getInstance();
 
+                    //Delete requestion from list if declined button clicked
                     String friendId = (String) getId(currentPosition);
-
                     String userId = mAuth.getCurrentUser().getUid().toString();
 
                     Firebase userRef = new Firebase("https://findyourfellow.firebaseio.com/Users/" + userId + "/FriendRequest/");
@@ -127,10 +124,9 @@ public class RequestAdapter extends ArrayAdapter {
             row.setTag(holder);
         }
         else
-        {
             holder = (RowHolder) row.getTag();
-        }
 
+        //Display name
         String FR = (String) getItem(position);
         holder.EMAIL.setText(FR);
 

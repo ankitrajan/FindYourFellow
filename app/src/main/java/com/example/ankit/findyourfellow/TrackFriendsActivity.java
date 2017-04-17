@@ -5,16 +5,11 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.Switch;
@@ -25,22 +20,16 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.UserProfileChangeRequest;
-
-import java.util.ArrayList;
-
-
-
 
 public class TrackFriendsActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private ArrayList<String> allFriend = new ArrayList<>();
-    private ListView listView;
+
     private Switch trackingSwitch;
+
+    private ListView listView;
+
     private BottomNavigationView bottomNavigationView;
 
     @Override
@@ -49,17 +38,13 @@ public class TrackFriendsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_track_friends);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-       // getSupportActionBar().setIcon(R.drawable.ic_track);
         getSupportActionBar().setTitle("");
-        //getSupportActionBar().setTitle("");
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setIcon(R.drawable.logofinal480);
-        //((AppCompatActivity) getActivity()).getSupportActionBar().setTitle();
 
-
+        mAuth = FirebaseAuth.getInstance();
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
 
@@ -67,25 +52,13 @@ public class TrackFriendsActivity extends AppCompatActivity {
 
         menu.getItem(0).setChecked(false);
 
-        /*
-        Menu menu = bottomNavigationView.getMenu();
-
-        for (int i = 0, size = menu.size(); i < size; i++) {
-
-            if(i == 0)
-                menu.getItem(0).setChecked(true);
-            else
-                menu.getItem(i).setChecked(false);
-        }
-        */
-
+        //Inflate bottom navigation items
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 switch(item.getItemId()) {
                     case R.id.manage_friends:
-                        //setContentView(R.layout.activity_manage_friends);
                         goToManageActivity();
                         return true;
                     case R.id.information:
@@ -96,36 +69,20 @@ public class TrackFriendsActivity extends AppCompatActivity {
                         startActivity(new Intent(TrackFriendsActivity.this, MainActivity.class));
                         Toast.makeText(getApplicationContext(), "Signed out", Toast.LENGTH_LONG).show();
                         return true;
-                   //case R.id.track_activity:
-                        //goToTrackFriendsActivity();
-                        //return true;
-                    //default:
-                      //return super.onOptionsItemSelected(item);
-
-
                 }
-
-
                 return false;
             }
         });
-        //getSupportActionBar().setTitle("Track Friends");
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-
+        //Lock into portrait
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        mAuth = FirebaseAuth.getInstance();
-
-        listView = (ListView) findViewById(R.id.myFriends);
         trackingSwitch = (Switch) findViewById(R.id.trackSwitch);
 
+        listView = (ListView) findViewById(R.id.myFriends);
 
-        //final ArrayAdapter<String> friendsAdapter= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, allFriend);
-
+        //Setup custom adapter
         final TrackAdapter friendsAdapter = new TrackAdapter(getApplicationContext(), R.layout.track_item);
-
         listView.setAdapter(friendsAdapter);
 
         final String thisUser = mAuth.getCurrentUser().getUid().toString();
@@ -140,25 +97,27 @@ public class TrackFriendsActivity extends AppCompatActivity {
                 if(dataSnapshot.exists()) {
                     String canTrack = dataSnapshot.getValue().toString();
 
-
+                    //Display correct status of switch depending on value in database
                     if (canTrack.equals("yes"))
                     {
+                        //Start tracking if allowed
                         trackingSwitch.setChecked(true);
                         Intent intent = new Intent(getApplicationContext(), LocationHelper.class);
                         startService(intent);
                     }
                     else
                     {
-                     trackingSwitch.setChecked(false);
-                     Intent intent = new Intent(getApplicationContext(), LocationHelper.class);
-                     stopService(intent);
+                        //Stop tracking if not allowed
+                        trackingSwitch.setChecked(false);
+                        Intent intent = new Intent(getApplicationContext(), LocationHelper.class);
+                        stopService(intent);
                     }
                 }
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
+                System.out.println("The read failed: " + firebaseError.getCode());
             }
         });
 
@@ -166,24 +125,20 @@ public class TrackFriendsActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
+                //Update value and location service when switch state changed
                 if(isChecked){
                     Intent intent = new Intent(getApplicationContext(), LocationHelper.class);
                     startService(intent);
                     trackingRef.setValue("yes");
-                    //Toast.makeText(getApplicationContext(),"START", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
                     Intent intent = new Intent(getApplicationContext(), LocationHelper.class);
                     stopService(intent);
                     trackingRef.setValue("no");
-                    //Toast.makeText(getApplicationContext(),"STOP", Toast.LENGTH_LONG).show();
                 }
-
             }
         });
-
-        //allFriends.add(thisUser);
 
         Firebase friendRef = new Firebase("https://findyourfellow.firebaseio.com/Users/" + thisUser + "/Friends");
 
@@ -191,8 +146,7 @@ public class TrackFriendsActivity extends AppCompatActivity {
 
             @Override
             public void onChildAdded(final DataSnapshot dataSnapshot, String s) {
-
-                //String friendName = dataSnapshot.getValue(String.class);
+                //Display all friends
                 final String friendName = dataSnapshot.getValue().toString();
                 final String friendKey = dataSnapshot.getKey().toString();
 
@@ -203,11 +157,8 @@ public class TrackFriendsActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot2)
                     {
-
-                        //if(dataSnapshot2.child("Latitude").exists())
-                        //{
+                            //Get coordinates so that it can be sent to adapter where distance and status are calculated
                             final String friendLat = dataSnapshot2.child("Latitude").getValue().toString();
-
                             final String friendLong = dataSnapshot2.child("Longitude").getValue().toString();
 
                             Firebase userRef = new Firebase("https://findyourfellow.firebaseio.com/Users/" + thisUser + "/Information");
@@ -216,74 +167,57 @@ public class TrackFriendsActivity extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot3) {
 
-                                    //if(dataSnapshot3.child("Latitude").exists())
-                                    //{
+                                        //Also send user coordinates so that distance can be calculated
                                         String userLat = dataSnapshot3.child("Latitude").getValue().toString();
-
                                         String userLong = dataSnapshot3.child("Longitude").getValue().toString();
 
                                         boolean myTest = friendsAdapter.isAlreadyInList(friendKey);
 
-                                        if (myTest) {
+                                        //if friend is already in the list and location is changed, replace old value in adapter,
+                                        // else add friend to adapter
+                                        if (myTest)
                                             friendsAdapter.replaceList(friendKey, friendLat, friendLong, userLat, userLong);
-                                            //Toast.makeText(TrackFriendsActivity.this, friendKey + " in list", Toast.LENGTH_SHORT).show();
-                                        } else {
+                                        else
                                             friendsAdapter.add(friendName, friendKey, friendLat, friendLong, userLat, userLong);
-                                            //Toast.makeText(TrackFriendsActivity.this, friendKey + " not in list", Toast.LENGTH_SHORT).show();
-                                        }
 
                                         friendsAdapter.notifyDataSetChanged();
-                                    //}
-                                    //else
-                                    //{
-                                        //Toast.makeText(TrackFriendsActivity.this, "Enable Tracking atleast once to track friends ", Toast.LENGTH_LONG).show();
-                                    //}
                                 }
 
                                 @Override
                                 public void onCancelled(FirebaseError firebaseError) {
-
+                                    System.out.println("The read failed: " + firebaseError.getCode());
                                 }
                             });
-                        //}
-                        //else {
-                            //Toast.makeText(TrackFriendsActivity.this, friendName + " hasn't yet enabled tracking", Toast.LENGTH_SHORT).show();
-                        //}
                     }
 
                     @Override
                     public void onCancelled(FirebaseError firebaseError) {
-
+                        System.out.println("The read failed: " + firebaseError.getCode());
                     }
                 });
             }
 
-
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
             }
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
+                System.out.println("The read failed: " + firebaseError.getCode());
             }
         });
     }
 
     private void userSignOut()
     {
-
         Intent intent = new Intent(getApplicationContext(), LocationHelper.class);
         stopService(intent);
         mAuth.signOut();
@@ -302,18 +236,10 @@ public class TrackFriendsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //void goToTrackFriendsActivity()
-    //{
-       //Intent intent = new Intent(TrackFriendsActivity.this, TrackFriendsActivity.class);
-       //startActivity(intent);
-    //}
-
-
     @Override
     protected void onResume() {
 
         Menu menu = bottomNavigationView.getMenu();
-
         menu.getItem(0).setChecked(false);
 
         super.onResume();
@@ -325,28 +251,4 @@ public class TrackFriendsActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
-
-    //manage what happens when options on the toolbar are clicked
-   /* @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch(item.getItemId())
-        {
-            case R.id.manage:
-                goToManageActivity();
-                return true;
-            case R.id.info:
-                goToInformationActivity();
-                return true;
-            case R.id.signout:
-                userSignOut();
-                startActivity(new Intent(TrackFriendsActivity.this, MainActivity.class));
-                Toast.makeText(getApplicationContext(), "Signed out", Toast.LENGTH_LONG).show();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-*/
 }

@@ -40,6 +40,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     protected Button createProfileButton;
     protected Button loginToProfileButton;
@@ -48,60 +50,43 @@ public class MainActivity extends AppCompatActivity {
     private EditText EmailField;
     private EditText PassworField;
 
-    private FirebaseAuth mAuth;
-
-    private FirebaseAuth.AuthStateListener mAuthListener;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-       // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-       // setSupportActionBar(toolbar);
-       // getSupportActionBar().setTitle("Find Your Friends");
 
+        //Lock into portrait
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-
         mAuth = FirebaseAuth.getInstance();
-
-        EmailField = (EditText) findViewById(R.id.emailField);
-        PassworField = (EditText) findViewById(R.id.passwordField);
 
         createProfileButton = (Button) findViewById(R.id.newCreateButton);
         loginToProfileButton = (Button) findViewById(R.id.loginButton);
         reset = (Button) findViewById(R.id.resetButton);
 
+        EmailField = (EditText) findViewById(R.id.emailField);
+        PassworField = (EditText) findViewById(R.id.passwordField);
 
+        //If authentication state changes, login if authenticated
         mAuthListener = new FirebaseAuth.AuthStateListener()
         {
 
             @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth)
-            {
-                if(firebaseAuth.getCurrentUser() != null)
-                {
-                    if (firebaseAuth.getCurrentUser().isEmailVerified()) {
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseAuth.getCurrentUser() != null)
+                    if (firebaseAuth.getCurrentUser().isEmailVerified())
                         goToTrackActivity();
-                    }
-                    // startActivity(new Intent(LoginActivity.this, AccountActivity.class));
-                }
             }
         };
 
+        //Allow login if permissions are accepted
         if(!runtime_permissions())
-        {
             enable_buttons();
-        }
-
     }
-
 
     private void enable_buttons()
     {
-
         createProfileButton.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
@@ -109,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
                 goToCreateActivity();
             }
         });
-
         loginToProfileButton.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
@@ -117,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
                 startLogin();
             }
         });
-
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,16 +109,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-
     private boolean runtime_permissions()
     {
+        //Get GPS location permission
         if(Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {
             requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
             return true;
         }
-
         return false;
     }
 
@@ -147,14 +128,11 @@ public class MainActivity extends AppCompatActivity {
 
         if(requestCode == 100)
         {
+            //Get internet permission
             if(grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED)
-            {
                 enable_buttons();
-            }
             else
-            {
                 runtime_permissions();
-            }
         }
     }
 
@@ -183,24 +161,18 @@ public class MainActivity extends AppCompatActivity {
         String email = EmailField.getText().toString();
         if(!(TextUtils.isEmpty(email)))
         {
-
             mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if(!(task.isSuccessful()))
-                    {
                         Toast.makeText(MainActivity.this, "Email not linked to any account", Toast.LENGTH_LONG).show();
-                    }
                     else
-                    {
                         Toast.makeText(MainActivity.this, "Email sent", Toast.LENGTH_SHORT).show();
-                    }
                 }
             });
         }
         else
             Toast.makeText(this, "Email field(s) is empty", Toast.LENGTH_SHORT).show();
-
     }
 
     private void startLogin()
@@ -223,30 +195,27 @@ public class MainActivity extends AppCompatActivity {
 
                         if (user.isEmailVerified())
                         {
-                            // user is verified, so you can finish this activity or send user to activity which you want.
+                            // user is verified, so logged in, which will be detected by the AuthStateListener
                             finish();
                             Toast.makeText(MainActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
-                            // email is not verified, so just prompt the message to the user and restart this activity.
+                            // email is not verified,
                             FirebaseAuth.getInstance().signOut();
 
                             Toast.makeText(MainActivity.this, "Email not verified", Toast.LENGTH_SHORT).show();
 
+                            //restart this activity
                             Intent intent = new Intent(MainActivity.this, MainActivity.class);
                             startActivity(intent);
-                            //restart this activity
-
                         }
-
                     }
                 }
             });
         }
         else
             Toast.makeText(MainActivity.this, "Field(s) is/are empty", Toast.LENGTH_LONG).show();
-
     }
 
 
@@ -259,6 +228,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void InternetAvailability() {
 
+        //If internet is disconnected, prompt user to reconnect to internet
         if (!isNetworkAvailable())
         {
             vibratePhone();
@@ -267,10 +237,8 @@ public class MainActivity extends AppCompatActivity {
                     .setCancelable(false)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
-                        public void onClick(DialogInterface dialog, int id)
-                        {
+                        public void onClick(DialogInterface dialog, int id) {
                             goToMobileDataSettings();
-
                         }
 
                     })
@@ -280,13 +248,12 @@ public class MainActivity extends AppCompatActivity {
                             dialog.cancel();
                         }
                     });
-
             builder.create().show();
         }
-
     }
 
     private boolean isNetworkAvailable() {
+        //Check if network is available
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
@@ -299,8 +266,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(mobileIntent);
     }
 
-/////////////////////////////////////////////////////////////////////////////
-
     public void vibratePhone(){
 
         addNotification();
@@ -309,34 +274,27 @@ public class MainActivity extends AppCompatActivity {
         vibe.vibrate(pattern,0);
         countDown();
 
-
         //when phone is sleeping
         BroadcastReceiver vibrateReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if(intent.getAction().equals(Intent.ACTION_SCREEN_OFF) && !isNetworkAvailable()) {
-
                     long[] pattern = {50,100,1000};
                     Vibrator vibe=(Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                     vibe.vibrate(pattern,0);
                     countDown();
-
                 }
             }
         };
 
         IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
         registerReceiver(vibrateReceiver, filter);
-        //end
-
     }
 
     public void countDown(){
 
         new CountDownTimer(5000, 1000) { //5 sec countdown
-
             public void onTick(long millisUntilFinished) {
-
             }
 
             public void onFinish() {
@@ -344,12 +302,11 @@ public class MainActivity extends AppCompatActivity {
                 v.cancel();
             }
         }.start();
-
     }
 
-    ////////////////////////////////////////////////////////////////
-
     private void addNotification() {
+
+        //Send notification if there is no network
         NotificationCompat.Builder builder =
                 (NotificationCompat.Builder) new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.logomain2) //logo
@@ -365,30 +322,4 @@ public class MainActivity extends AppCompatActivity {
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(0, builder.build());
     }
-
-
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-    */
-
 }

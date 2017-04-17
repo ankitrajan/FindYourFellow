@@ -3,8 +3,6 @@ package com.example.ankit.findyourfellow;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -21,6 +19,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class EditProfileActivity extends AppCompatActivity {
 
+    private FirebaseAuth mAuth;
+
+    private Button saveNewProfile;
+
     private EditText firstName;
     private EditText lastName;
     private EditText age;
@@ -28,10 +30,6 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText emergency1;
     private EditText emergency2;
     private EditText emergency3;
-    private Button saveNewProfile;
-
-
-    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +40,12 @@ public class EditProfileActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Edit Profile");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //Lock into portrait
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        saveNewProfile = (Button) findViewById(R.id.profileSave);
 
         firstName = (EditText) findViewById(R.id.editFirstName);
         lastName = (EditText) findViewById(R.id.editLastName);
@@ -52,23 +55,16 @@ public class EditProfileActivity extends AppCompatActivity {
         emergency2 = (EditText) findViewById(R.id.editEmergency2);
         emergency3 = (EditText) findViewById(R.id.editEmergency3);
 
-        saveNewProfile = (Button) findViewById(R.id.profileSave);
-
-        mAuth = FirebaseAuth.getInstance();
-
         populateView();
 
         saveNewProfile.setOnClickListener(new View.OnClickListener()
         {
-
             @Override
             public void onClick(View v)
             {
                 editAccount();
             }
         });
-
-
     }
 
     private void populateView()
@@ -80,6 +76,7 @@ public class EditProfileActivity extends AppCompatActivity {
         userInfoRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                //Display current user information
                 firstName.setText(dataSnapshot.child("FirstName").getValue().toString());
                 lastName.setText(dataSnapshot.child("LastName").getValue().toString());
                 age.setText(dataSnapshot.child("Age").getValue().toString());
@@ -87,27 +84,19 @@ public class EditProfileActivity extends AppCompatActivity {
                 emergency1.setText(dataSnapshot.child("EmergencyNumber1").getValue().toString());
 
                 if(dataSnapshot.child("EmergencyNumber2").exists())
-                {
                     emergency2.setText(dataSnapshot.child("EmergencyNumber2").getValue().toString());
-                }
                 else
-                {
                     emergency2.setHint("No 2nd contact");
-                }
 
                 if(dataSnapshot.child("EmergencyNumber3").exists())
-                {
                     emergency3.setText(dataSnapshot.child("EmergencyNumber3").getValue().toString());
-                }
                 else
-                {
                     emergency3.setHint("No 3rd contact");
-                }
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
+                System.out.println("The read failed: " + firebaseError.getCode());
             }
         });
 
@@ -129,40 +118,28 @@ public class EditProfileActivity extends AppCompatActivity {
 
             Firebase userInfoRef = new Firebase("https://findyourfellow.firebaseio.com/Users/" + thisUser +"/Information/");
 
+            //Save new values into database
             userInfoRef.child("FirstName").setValue(fName);
-
             userInfoRef.child("LastName").setValue(lName);
-
             userInfoRef.child("Age").setValue(newAge);
-
             userInfoRef.child("PhoneNumber").setValue(phoneNumber);
-
             userInfoRef.child("EmergencyNumber1").setValue(emergencyNumber1);
 
             if(!(TextUtils.isEmpty(emergencyNumber2)))
-            {
                 userInfoRef.child("EmergencyNumber2").setValue(emergencyNumber2);
-            }
             else
-            {
                 userInfoRef.child("EmergencyNumber2").removeValue();
-            }
 
             if(!(TextUtils.isEmpty(emergencyNumber3)))
-            {
                 userInfoRef.child("EmergencyNumber3").setValue(emergencyNumber3);
-            }
             else
-            {
                 userInfoRef.child("EmergencyNumber3").removeValue();
-            }
 
+            //return to previous activity
             goToInformationActivity();
         }
         else
-        {
             Toast.makeText(EditProfileActivity.this, "Field(s) cannot be left empty", Toast.LENGTH_LONG).show();
-        }
     }
 
     void goToInformationActivity()
@@ -170,5 +147,4 @@ public class EditProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(EditProfileActivity.this, InformationActivity.class);
         startActivity(intent);
     }
-
 }

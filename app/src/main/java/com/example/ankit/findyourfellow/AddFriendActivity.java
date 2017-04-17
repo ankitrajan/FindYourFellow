@@ -3,8 +3,6 @@ package com.example.ankit.findyourfellow;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -20,14 +18,14 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseError;
 
 public class AddFriendActivity extends AppCompatActivity {
 
-    protected EditText searchEdit;
+    private FirebaseAuth mAuth;
+
     protected Button requestButton;
 
-    private FirebaseAuth mAuth;
+    protected EditText searchEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,62 +36,53 @@ public class AddFriendActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Add Friend");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //Lock into portrait
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-        searchEdit = (EditText) findViewById(R.id.editSearch);
-
-        requestButton = (Button) findViewById(R.id.sendRequest);
 
         mAuth = FirebaseAuth.getInstance();
 
+        requestButton = (Button) findViewById(R.id.sendRequest);
+
+        searchEdit = (EditText) findViewById(R.id.editSearch);
+
+        //Test input and if correct, add request to appropriate list
         requestButton.setOnClickListener(new View.OnClickListener()
         {
-
             @Override
             public void onClick(View v)
             {
-                final String searchRequest = searchEdit.getText().toString();
+                final String searchRequest = searchEdit.getText().toString();   //FriendKey
 
                 String userID = mAuth.getCurrentUser().getUid().toString();
-                //Toast.makeText(AddFriendActivity.this, "userID is " + mAuth.getCurrentUser().getUid().toString(), Toast.LENGTH_LONG).show();
-                //Toast.makeText(AddFriendActivity.this, "search request is " + searchRequest, Toast.LENGTH_LONG).show();
-
 
                 if (searchRequest.isEmpty())
                     Toast.makeText(AddFriendActivity.this, "Field cannot be left empty", Toast.LENGTH_LONG).show();
                 else if (searchRequest.equals(mAuth.getCurrentUser().getUid().toString()))
-                {
                     Toast.makeText(AddFriendActivity.this, "You cannot add yourself", Toast.LENGTH_LONG).show();
-                }
                 else
                 {
                     final Firebase newFriendRef = new Firebase("https://findyourfellow.firebaseio.com/Users/" + searchRequest + "/Information/Email");
 
                     newFriendRef.addValueEventListener(new ValueEventListener()
                     {
-
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot)
                         {
                             String  friendEmail = dataSnapshot.getValue(String.class);
 
                             if (friendEmail == null)
-                            {
                                 Toast.makeText(AddFriendActivity.this, "User does not exist", Toast.LENGTH_LONG).show();
-                            }
                             else
                             {
+                                //Add request to requested friend's FriendRequest list
                                 FirebaseUser user = mAuth.getCurrentUser();
-
                                 Firebase friendListRef = new Firebase("https://findyourfellow.firebaseio.com/Users/" + searchRequest+ "/FriendRequest/");
 
                                 Firebase addRequestRef = friendListRef.child(user.getUid().toString());
-
                                 addRequestRef.setValue(user.getDisplayName().toString());
 
                                 Toast.makeText(AddFriendActivity.this, "Friend request sent", Toast.LENGTH_SHORT).show();
                             }
-
                         }
 
                         @Override
@@ -103,7 +92,6 @@ public class AddFriendActivity extends AppCompatActivity {
                         }
                     });
                 }
-
             }
         });
     }
@@ -122,7 +110,6 @@ public class AddFriendActivity extends AppCompatActivity {
     void goToTrackActivity()
     {
         Intent intent = new Intent(AddFriendActivity.this, TrackFriendsActivity.class);
-        //Toast.makeText(getApplicationContext(), "Friend Managed", Toast.LENGTH_LONG).show();
         startActivity(intent);
     }
 
@@ -163,5 +150,4 @@ public class AddFriendActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }

@@ -5,7 +5,6 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -19,10 +18,12 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class InformationActivity extends AppCompatActivity {
 
+    private FirebaseAuth mAuth;
+
+    protected Button userEdit;
     protected TextView appInfo;
     protected TextView thisUser;
-    protected Button userEdit;
-    private FirebaseAuth mAuth;
+
     private BottomNavigationView bottomNavigationView;
 
     @Override
@@ -32,27 +33,18 @@ public class InformationActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Information");
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        appInfo = (TextView) findViewById(R.id.appView);
+        mAuth = FirebaseAuth.getInstance();
 
         userEdit = (Button) findViewById(R.id.editUser);
 
+        appInfo = (TextView) findViewById(R.id.appView);
+
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
-
         Menu menu = bottomNavigationView.getMenu();
-
         menu.getItem(2).setChecked(false);
-        /*
-        for (int i = 0, size = menu.size(); i < size; i++) {
 
-            if(i == 2)
-                menu.getItem(2).setChecked(true);
-            else
-                menu.getItem(i).setChecked(false);
-        }
-        */
-
+        //Inflate bottom navigation items
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -61,9 +53,6 @@ public class InformationActivity extends AppCompatActivity {
                     case R.id.manage_friends:
                         goToManageActivity();
                         return true;
-                    //case R.id.information:
-                        //goToInformationActivity();
-                        //return true;
                     case R.id.sign_out:
                         userSignOut();
                         startActivity(new Intent(InformationActivity.this, MainActivity.class));
@@ -72,11 +61,7 @@ public class InformationActivity extends AppCompatActivity {
                     case R.id.track_activity:
                         goToTrackActivity();
                         return true;
-
-
                 }
-
-
                 return false;
             }
         });
@@ -88,15 +73,11 @@ public class InformationActivity extends AppCompatActivity {
             }
         });
 
+        //Lock into portrait
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-        mAuth = FirebaseAuth.getInstance();
-
 
         thisUser = (TextView) findViewById(R.id.userid);
         thisUser.setText (mAuth.getCurrentUser().getUid().toString());
-
-
 
         appInfo.setText("Developers: \n \n" +
                         "Galal, Ahmed \n" +
@@ -140,12 +121,6 @@ public class InformationActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //void goToInformationActivity()
-    //{
-        //Intent intent = new Intent(InformationActivity.this, InformationActivity.class);
-        //startActivity(intent);
-    //}
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -162,28 +137,4 @@ public class InformationActivity extends AppCompatActivity {
 
         super.onResume();
     }
-
-    //manage what happens when options on the toolbar are clicked
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch(item.getItemId())
-        {
-            case R.id.track:
-                goToTrackActivity();
-                return true;
-            case R.id.manage:
-                goToManageActivity();
-                return true;
-            case R.id.signout:
-                userSignOut();
-                startActivity(new Intent(InformationActivity.this, MainActivity.class));
-                Toast.makeText(getApplicationContext(), "Signed out", Toast.LENGTH_LONG).show();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-*/
-
 }

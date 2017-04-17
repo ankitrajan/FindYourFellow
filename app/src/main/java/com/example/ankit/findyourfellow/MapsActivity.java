@@ -1,13 +1,10 @@
 package com.example.ankit.findyourfellow;
 
-import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -40,18 +37,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
+    /*
+    Manipulates the map once available.
+    This callback is triggered when the map is ready to be used.
+    This is where we can add markers or lines, add listeners or move the camera.
+    If Google Play services is not installed on the device, the user will be prompted to install
+    it inside the SupportMapFragment. This method will only be triggered once the user has
+    installed Google Play services and returned to the app.
+    */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+        //Get information
         Bundle extras = getIntent().getExtras();
         String friendKey = extras.getString("FRIENDKEY");
         String userKey = extras.getString("USERKEY");
@@ -62,14 +60,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 final String friendLat = dataSnapshot.child("Latitude").getValue().toString();
-
                 final String friendLong = dataSnapshot.child("Longitude").getValue().toString();
 
+                //Get correct format for map display
                 double lat=Double.parseDouble(friendLat);
                 double lng=Double.parseDouble(friendLong);
 
                 mMap.clear();
 
+                //Go to correct map part
                 LatLng coordinates = new LatLng(lat, lng);
                 mMap.addMarker(new MarkerOptions().position(coordinates).title("Friend's Location"));
                 mMap.getUiSettings().setMapToolbarEnabled(false);
@@ -78,33 +77,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
+                System.out.println("The read failed: " + firebaseError.getCode());
             }
         });
     }
-
-    /*
-
-    public void setNormalView()
-    {
-        Toast.makeText(this, "Normal", Toast.LENGTH_SHORT).show();
-    }
-
-    public void setTerrainView()
-    {
-        Toast.makeText(this, "Terrain", Toast.LENGTH_SHORT).show();
-    }
-
-    public void setSatelliteView()
-    {
-        Toast.makeText(this, "Satellite", Toast.LENGTH_SHORT).show();
-    }
-
-    public void setHybridView()
-    {
-        Toast.makeText(this, "Hybruid", Toast.LENGTH_SHORT).show();
-    }
-    */
 
     @Override
     public void onBackPressed() {
@@ -118,6 +94,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return true;
     }
 
+    //manage what happens when options on the toolbar are clicked
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 

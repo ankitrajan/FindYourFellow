@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.firebase.client.Firebase;
@@ -16,15 +15,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Ankit on 2017-03-22.
- */
-
 public class ManageAdapter extends ArrayAdapter {
 
     private FirebaseAuth mAuth;
+
     private List name = new ArrayList();
     private List id = new ArrayList();
+
     Context c;
 
     public ManageAdapter(Context context, int resource)
@@ -68,6 +65,7 @@ public class ManageAdapter extends ArrayAdapter {
 
         final int currentPosition = position;
 
+        //Inflate row
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = inflater.inflate(R.layout.delete_item, parent, false);
@@ -82,7 +80,7 @@ public class ManageAdapter extends ArrayAdapter {
                 public void onClick(View v) {
                     mAuth = FirebaseAuth.getInstance();
 
-
+                    //Send to EditNameActivity with proper information when name is clicked
                     Intent intent = new Intent(c, EditNameActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("FRIENDKEY", id.get(currentPosition).toString());
@@ -94,23 +92,20 @@ public class ManageAdapter extends ArrayAdapter {
 
             holder.DELETE.setOnClickListener(new View.OnClickListener()
             {
-
                 @Override
                 public void onClick(View v)
                 {
 
                     mAuth = FirebaseAuth.getInstance();
 
+                    //Delete users from eachother if delete button is clicked
                     String friendId = (String) getId(currentPosition);
-
                     String userId = mAuth.getCurrentUser().getUid();
 
                     Firebase friendRef = new Firebase("https://findyourfellow.firebaseio.com/Users/" + friendId + "/Friends/");
-
                     Firebase userRef = new Firebase("https://findyourfellow.firebaseio.com/Users/" + userId + "/Friends/");
 
                     userRef.child(friendId).removeValue();
-
                     friendRef.child(userId).removeValue();
                 }
             });
@@ -118,10 +113,9 @@ public class ManageAdapter extends ArrayAdapter {
             row.setTag(holder);
         }
         else
-        {
             holder = (ManageAdapter.RowHolder) row.getTag();
-        }
 
+        //Display name
         String FR = (String) getItem(position);
         holder.NAME.setText(FR);
 

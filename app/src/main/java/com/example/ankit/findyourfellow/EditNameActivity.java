@@ -3,8 +3,6 @@ package com.example.ankit.findyourfellow;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -17,8 +15,9 @@ import com.firebase.client.Firebase;
 
 public class EditNameActivity extends AppCompatActivity {
 
-    EditText newName;
     Button saveButton;
+
+    EditText newName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,15 +28,18 @@ public class EditNameActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Edit Friend Name");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //Lock into portrait
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        //Get current name
         Bundle extras = getIntent().getExtras();
         final String friendKey = extras.getString("FRIENDKEY");
         final String friendName = extras.getString("FRIENDNAME");
         final String thisUser = extras.getString("USERKEY");
 
-        newName = (EditText) findViewById(R.id.editName);
         saveButton = (Button) findViewById(R.id.nameSave);
+
+        newName = (EditText) findViewById(R.id.editName);
 
         newName.setHint(friendName);
 
@@ -50,6 +52,7 @@ public class EditNameActivity extends AppCompatActivity {
                 String newText = newName.getText().toString();
 
                 if(!(TextUtils.isEmpty(newText))) {
+                    //Set new name in database and return to previous activity
                     newRef.child(friendKey).setValue(newName.getText().toString());
                     Toast.makeText(EditNameActivity.this, "Name changed", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(EditNameActivity.this, ManageFriendsActivity.class);
@@ -60,5 +63,4 @@ public class EditNameActivity extends AppCompatActivity {
             }
         });
     }
-
 }

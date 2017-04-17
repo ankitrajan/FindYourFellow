@@ -8,10 +8,8 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import android.location.LocationListener;
-import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,12 +19,10 @@ import java.util.Date;
 
 public class LocationHelper extends Service
 {
+    private FirebaseAuth mAuth;
 
     private LocationListener listener;
     private LocationManager locationManager;
-    //private String lastUpdateTime;
-
-    private FirebaseAuth mAuth;
 
     @Nullable
     @Override
@@ -50,34 +46,29 @@ public class LocationHelper extends Service
             {
                 Intent intent = new Intent("location_update");
 
+                //Get new location
                 intent.putExtra("coordinates", location.getLongitude()+ " " + location.getLatitude());
                 sendBroadcast(intent);
-
-                //String lastUpdateTime = String.valueOf(location.getTime());
 
                 String lastUpdateTime = (DateFormat.getDateTimeInstance().format(new Date())).toString();
 
                 informationRef.child("Latitude").setValue(location.getLatitude());
-
                 informationRef.child("Longitude").setValue(location.getLongitude());
-
                 informationRef.child("LastUpdate").setValue(lastUpdateTime);
-
             }
 
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
-
             }
 
             @Override
             public void onProviderEnabled(String provider) {
-
             }
 
             @Override
             public void onProviderDisabled(String provider)
             {
+                //If GPS is disabled, redirect user to enable GPS
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -87,10 +78,10 @@ public class LocationHelper extends Service
 
         locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
 
-        //Toast.makeText(this, "Attempting to get location", Toast.LENGTH_SHORT).show();
-
+        //Get location from GPS
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,5000,0, listener);
 
+        //Get location from Network
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,5000,0, listener);
     }
 
@@ -99,8 +90,6 @@ public class LocationHelper extends Service
         super.onDestroy();
 
         if(locationManager != null)
-        {
             locationManager.removeUpdates(listener);
-        }
     }
 }
