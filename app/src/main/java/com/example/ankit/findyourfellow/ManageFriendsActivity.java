@@ -88,8 +88,7 @@ public class ManageFriendsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s)
-            {
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
             }
 
             @Override
@@ -150,9 +149,7 @@ public class ManageFriendsActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-
         Menu menu = bottomNavigationView.getMenu();
-
         menu.getItem(1).setChecked(false);
 
         super.onResume();

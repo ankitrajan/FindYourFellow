@@ -58,6 +58,7 @@ public class FriendInfoActivity extends AppCompatActivity {
                 emergency.setText(dataSnapshot.child("EmergencyNumber1").getValue().toString());
                 time.setText(dataSnapshot.child("LastUpdate").getValue().toString());
 
+                //Display extra emergency contacts if present in database
                 if(dataSnapshot.child("EmergencyNumber2").exists())
                     emergency2.setText(dataSnapshot.child("EmergencyNumber2").getValue().toString());
 

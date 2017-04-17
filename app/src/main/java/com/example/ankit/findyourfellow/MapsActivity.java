@@ -100,6 +100,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        //Different map views are offered in the toolbar
         switch(item.getItemId())
         {
             case R.id.normal:

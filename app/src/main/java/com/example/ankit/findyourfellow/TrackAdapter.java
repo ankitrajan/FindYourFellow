@@ -188,7 +188,7 @@ public class TrackAdapter extends ArrayAdapter{
                 PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(contentIntent);
 
-        // Add as notification
+        //Display as notification
         NotificationManager manager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(0, builder.build());
     }
