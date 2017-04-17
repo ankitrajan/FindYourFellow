@@ -21,6 +21,8 @@
         android:ems="10"
         android:fontFamily="sans-serif-condensed"
         android:hint="First Name"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVQXYZ"
+        android:maxLength="13"
         android:inputType="textPersonName"
         android:textColor="@android:color/black"
         android:layout_alignBottom="@+id/imageView"
@@ -34,6 +36,8 @@
         android:ems="10"
         android:fontFamily="sans-serif-condensed"
         android:hint="Last Name"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVQXYZ"
+        android:maxLength="13"
         android:inputType="textPersonName"
         android:layout_below="@+id/createFirstName"
         android:layout_alignStart="@+id/createFirstName" />
@@ -46,6 +50,7 @@
         android:ems="10"
         android:fontFamily="sans-serif-condensed"
         android:hint="Age"
+        android:maxLength="3"
         android:inputType="number"
         android:layout_below="@+id/createLastName"
         android:layout_alignStart="@+id/createLastName" />

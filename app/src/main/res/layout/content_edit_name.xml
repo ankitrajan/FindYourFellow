@@ -35,7 +35,7 @@
 
     <ImageView
         android:id="@+id/imageView14"
-        android:layout_width="230dp"
+        android:layout_width="320dp"
         android:layout_height="45dp"
         android:layout_alignBottom="@+id/editName"
         android:layout_centerHorizontal="true"
@@ -44,14 +44,17 @@
 
     <EditText
         android:id="@+id/editName"
-        android:layout_width="200dp"
+        android:layout_width="300dp"
         android:layout_height="37dp"
         android:layout_below="@+id/imageView13"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="36dp"
-        android:textColorHint="@android:color/white"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVQXYZ "
         android:ems="10"
         android:inputType="textPersonName"
+        android:maxLength="26"
         android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColorHint="@android:color/white"
+        android:textSize="12sp"
         android:visibility="visible" />
 </RelativeLayout>

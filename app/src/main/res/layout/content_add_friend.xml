@@ -52,6 +52,7 @@
         android:background="@android:color/transparent"
         android:textColorHint="@android:color/white"
         android:ems="10"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
         android:fontFamily="sans-serif-condensed"
         android:hint="  Friend Key"
         android:inputType="textPersonName"

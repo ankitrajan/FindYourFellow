@@ -27,8 +27,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_maps);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Friend Location");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        getSupportActionBar().setTitle(getIntent().getExtras().getString("FRIENDNAME"));
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -54,6 +55,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         String friendKey = extras.getString("FRIENDKEY");
         String userKey = extras.getString("USERKEY");
 
+
         Firebase friendInfoRef = new Firebase("https://findyourfellow.firebaseio.com/Users/" + getIntent().getStringExtra("FRIENDKEY") + "/Information");
 
         friendInfoRef.addValueEventListener(new ValueEventListener() {
@@ -70,7 +72,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 //Go to correct map part
                 LatLng coordinates = new LatLng(lat, lng);
-                mMap.addMarker(new MarkerOptions().position(coordinates).title("Friend's Location"));
+                mMap.addMarker(new MarkerOptions().position(coordinates).title("Current Location"));
                 mMap.getUiSettings().setMapToolbarEnabled(false);
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 15));
             }
